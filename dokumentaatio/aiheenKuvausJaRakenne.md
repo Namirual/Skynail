@@ -5,13 +5,19 @@ Toteutetaan vuoropohjainen roolipeli, jonka rakenne on sekoitus perinteistä lau
 
 Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoitus on toteuttaa peliin tietokoneen ohjaamia vastustajia, jotka liikkuvat kartalla ja kilpailevat pelaajan kanssa resursseista.
 
+**Suunnitteluvaiheen luokkakaavio**
+
+![Viikon 2 luokkakaavio](Luokkakaaviovko2.png)
+
+Luokkakaavio kuvaa ohjelman rakennetta viikolla 2, jossa on toteutettu verkostossa liikkuminen ja reitinhaku.
+
 **Kartta**
 
-Kartalla liikkuminen muistuttaa perinteisiä lautapelejä, erityisesti Afrikan tähteä. Joka vuorolla pelaaja heittää kahta noppaa ja siirtyy enintään noppaluvun määräämän lukumäärän. Kartta on tarkoitus Pelilauta ei koostu ruuduista vaan solmuista, jotka muodostavat verkon; solmu yhdistyy siis aina yhteen tai useampaan solmuun. 
+Kartalla liikkuminen muistuttaa perinteisiä lautapelejä, erityisesti Afrikan tähteä. Joka vuorolla pelaaja heittää kahta noppaa ja siirtyy enintään noppaluvun määräämän lukumäärän. Pelilauta ei koostu ruuduista vaan solmuista, jotka muodostavat verkon; solmu yhdistyy siis aina yhteen tai useampaan solmuun. 
 
 Kartta toteutetaan alkuvaiheessa tekstipohjaisena. Kehityksen edetessä kartta on kuitenkin tarkoitus toteuttaa graafisena niin, että pelaaja voi valita hiirellä solmun, johon siirtyy.
 
-Solmuissa voi sijaita kohteita, joihin pelaaja voi matkustaa. Kohteilla voi olla erilaisia ominaisuuksia. Kohdetyyppejä ovat esimerkiksi:
+Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seuraa erityinen tapahtuma sen mukaan, mitä ominaisuuksia kohteella on. Kohdetyyppejä ovat esimerkiksi:
 
 * Luolasto
 	* Luolastossa on yksi tai useampi hirviö, joiden kanssa voi taistella. Jos pelaaja voittaa, pelaaja saa luolastossa sijaitsevan aarteen.

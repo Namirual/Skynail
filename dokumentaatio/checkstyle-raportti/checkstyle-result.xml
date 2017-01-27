@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.11.2">
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/domain/City.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/domain/Point.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/domain/Road.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/domain/Team.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/InitText.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/service/PathService.java">
+</file>
+<file name="/Users/lmantyla/Skynail/skynail/src/main/java/skynail/TextControl.java">
+</file>
+</checkstyle>

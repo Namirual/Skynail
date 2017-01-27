@@ -65,7 +65,7 @@ public class PathService {
         if (legalMoves.containsKey(reachablePoint)) {
             if (legalMoves.get(reachablePoint) > distance) {
                 return Arrays.asList(reachablePoint);
-            } else {
+            } else if (legalMoves.get(reachablePoint) < distance) {
                 return new ArrayList<Point>();
             }
         }

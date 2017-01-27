@@ -98,7 +98,7 @@ public class PathServiceTest {
     }
 
     @Test
-    public void cannotMoveToSamePoint() {
+    public void cannotMoveToStartingPoint() {
         a.addPoints(b);
         b.addPoints(a);
 
@@ -108,7 +108,7 @@ public class PathServiceTest {
     }
 
     @Test
-    public void returnsPointsWithHigherDistance() {
+    public void getNewReachablePointDelaysAnalysisOfMovesUntilDistanceMatches() {
         a.addPoints(b, c);
 
         pathService.getLegalMoves().put(b, 2);
@@ -119,6 +119,31 @@ public class PathServiceTest {
     }
 
     @Test
+    public void getNewReachablePointReturnsEmptyWhenBetterLegalMoveExists() {
+        a.addPoints(b);
+        b.addPoints(c);
+
+        pathService.getLegalMoves().put(c, 1);
+        List<Point> newReachablePoints = new ArrayList<Point>();
+        newReachablePoints.addAll(pathService.getNewReachablePoints(c, 2, 2));
+        assertEquals(newReachablePoints.size(), 0);
+        assertFalse(newReachablePoints.contains(b));
+    }
+
+    @Test
+    public void getNewReachablePointContinuesWhenDistanceMatchesLegalMoveDistance() {
+        a.addPoints(b);
+        b.addPoints(c);
+        c.addPoints(d);
+
+        pathService.getLegalMoves().put(b, 1);
+        List<Point> newReachablePoints = new ArrayList<Point>();
+        newReachablePoints.addAll(pathService.getNewReachablePoints(c, 4, 1));
+        assertEquals(newReachablePoints.size(), 1);
+        assertTrue(newReachablePoints.contains(d));
+    }
+
+    @Test
     public void routeIsReturned() {
         a.addPoints(b, e);
         b.addPoints(a, c);
@@ -126,9 +151,6 @@ public class PathServiceTest {
         d.addPoints(c);
 
         legalMoves = pathService.calculateLegalMoves(3);
-        for (Point key : legalMoves.keySet()) {
-            System.out.println(key.getName() + " " + legalMoves.get(key));
-        }
         List<Point> route = pathService.getMovementRoute(d);
 
         assertEquals(route.size(), 4);
