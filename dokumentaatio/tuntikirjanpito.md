@@ -8,3 +8,4 @@ Päivä | Tunnit | Kuvaus
 26.01.2017 | 6.0h | Reittihaun toteuttaminen ja JUnit-testit
 27.01.2017 | 3.0h | Lisää testejä, Pit- ja CheckStyle -raportit, luokkakaavio
 31.01.2017 | 4.0h | Kartan piirtäminen Swingillä
+03.02.2017 | 5.0h | Graafinen käyttöliittymä, testit, dokumentit

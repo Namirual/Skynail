@@ -9,3 +9,7 @@ Peliin on tarkoitus toteuttaa graafinen käyttöliittymä, joka muistuttaa esity
 [Aiheen kuvaus](dokumentaatio/aiheenKuvausJaRakenne.md)
 
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
+
+[Pit-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/tree/master/dokumentaatio/pit-raportti/201702032254/index.html)
+
+[Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/tree/master/dokumentaatio/checkstyle-raportti/checkstyle.html)

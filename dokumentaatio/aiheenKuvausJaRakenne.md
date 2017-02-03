@@ -7,9 +7,9 @@ Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoit
 
 **Suunnitteluvaiheen luokkakaavio**
 
-![Viikon 2 luokkakaavio](Luokkakaaviovko2.png)
+![Viikon 2 luokkakaavio](Luokkakaaviovko3.png)
 
-Luokkakaavio kuvaa ohjelman rakennetta viikolla 2, jossa on toteutettu verkostossa liikkuminen ja reitinhaku.
+Luokkakaavio kuvaa ohjelman rakennetta viikolla 3, jossa viikkoon 2 nähden on lisätty Swingillä toteutettu graafinen käyttöliittymä verkossa liikkumista varten sekä erillinen nopanheitto. Graafisen käyttöliittymän luokkien riippuvuudet ovat nyt tarpeettoman monimutkaiset, ja sitä voisi jatkossa selkiyttää. 
 
 **Kartta**
 
