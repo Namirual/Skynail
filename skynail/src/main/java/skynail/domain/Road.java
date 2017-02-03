@@ -7,6 +7,7 @@ package skynail.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import skynail.gui.MapPoint;
 
 /**
  *
@@ -17,10 +18,17 @@ public class Road implements Point {
 
     String name;
     List<Point> points;
+    MapPoint mapPoint;
 
     public Road(String name) {
         this.name = name;
         this.points = new ArrayList<>();
+    }
+
+    public Road(String name, MapPoint mapPoint) {
+        this.name = name;
+        this.points = new ArrayList<>();
+        this.mapPoint = mapPoint;
     }
 
     public void addPoints(Point... newPoints) {
@@ -29,6 +37,10 @@ public class Road implements Point {
         }
     }
 
+    public MapPoint getMapPoint() {
+        return mapPoint;
+    }
+    
     @Override
     public void addPointsBothWays(Point... newPoints) {
         for (Point point : newPoints) {

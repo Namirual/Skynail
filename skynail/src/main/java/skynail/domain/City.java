@@ -6,6 +6,7 @@
 package skynail.domain;
 
 import java.util.List;
+import skynail.gui.MapPoint;
 
 /**
  *
@@ -42,6 +43,11 @@ public class City implements Point {
 
     @Override
     public void addPointsBothWays(Point... newPoints) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public MapPoint getMapPoint() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

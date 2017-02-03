@@ -43,35 +43,50 @@ public class PathService {
         reachablePoints.addAll(team.getLocation().getLinkedPoints());
 
         for (int distance = 0; distance < moves; distance++) {
-            for (Point searchablePoint : reachablePoints) {
-                newReachablePoints.addAll(getNewReachablePoints(searchablePoint, moves, distance));
+            for (Point reachablePoint : reachablePoints) {
+                if (legalMoves.containsKey(reachablePoint)) {
+                    newReachablePoints.addAll(handleReachedPoint(reachablePoint, moves, distance));
+                } else {
+                    newReachablePoints.addAll(getNewReachablePoints(reachablePoint, moves, distance));
+                }
             }
-
-            reachablePoints.clear();
-            reachablePoints.addAll(newReachablePoints);
             if (reachablePoints.contains(team.getLocation())) {
                 reachablePoints.remove(team.getLocation());
             }
+            reachablePoints.clear();
+            reachablePoints.addAll(newReachablePoints);
+
             newReachablePoints.clear();
         }
 
         return legalMoves;
     }
 
-    public List<Point> getNewReachablePoints(Point reachablePoint, int moves, int distance) {
-        // If a reachable point has a higher distance than is currently examined, examining it
-        // is delayed until the loop's distance catches up. Therefore the original point is returned.
+    // If a reachable point has a higher distance than is currently examined, examining it
+    // is delayed until the loop's distance catches up. Therefore the original point is returned.
+    public List<Point> handleReachedPoint(Point reachablePoint, int moves, int distance) {
 
-        if (legalMoves.containsKey(reachablePoint)) {
-            if (legalMoves.get(reachablePoint) > distance) {
-                return Arrays.asList(reachablePoint);
-            } else if (legalMoves.get(reachablePoint) < distance) {
-                return new ArrayList<Point>();
-            }
+        if (legalMoves.get(reachablePoint) > distance) {
+            return Arrays.asList(reachablePoint);
+        } else if (legalMoves.get(reachablePoint) < distance) {
+            return new ArrayList<Point>();
         }
+
+        return reachablePoint.getLinkedPoints();
+    }
+
+    public List<Point> getNewReachablePoints(Point reachablePoint, int moves, int distance) {
 
         int movesRequired = reachablePoint.movesRequired(team);
 
+        if (reachablePoint.equals(team.getLocation())) {
+            return new ArrayList<>();
+        }
+
+        if (movesRequired > 1 && movesRequired <= moves - distance) {
+            legalMoves.put(reachablePoint, distance + movesRequired);
+            return new ArrayList<Point>();
+        }
         if (movesRequired > 0 && movesRequired <= moves - distance) {
             legalMoves.put(reachablePoint, distance + movesRequired);
             return reachablePoint.getLinkedPoints();

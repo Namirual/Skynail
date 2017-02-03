@@ -6,6 +6,7 @@
 package skynail.domain;
 
 import java.util.List;
+import skynail.gui.MapPoint;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface Point {
     List<Point> getLinkedPoints();
 
     int movesRequired(Team team);
+    
+    MapPoint getMapPoint();
 
     void addPoints(Point... newPoints);
 

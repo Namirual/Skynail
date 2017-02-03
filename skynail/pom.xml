@@ -38,10 +38,13 @@
                     <targetClasses>
                         <param>skynail.domain.*</param>
                         <param>skynail.service.*</param>
+                        <param>skynail.game.*</param>
+
                     </targetClasses>
                     <targetTests>
                         <param>skynail.domain.*</param>
                         <param>skynail.service.*</param>
+                        <param>skynail.game.*</param>
                     </targetTests>
                 </configuration>
 

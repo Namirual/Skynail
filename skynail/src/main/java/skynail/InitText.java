@@ -17,7 +17,7 @@ import skynail.domain.Team;
  */
 public class InitText {
 
-    public static void main(String[] args) {
+    public static void oldMain(String[] args) {
         Road a = new Road("West 1");
         Road b = new Road("West 2");
         Road c = new Road("West 3");

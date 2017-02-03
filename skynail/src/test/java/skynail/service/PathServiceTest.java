@@ -60,10 +60,10 @@ public class PathServiceTest {
 
     @Test
     public void returnsReachablePoints() {
-        a.addPoints(b, c);
+        b.addPoints(a, c);
 
         List<Point> list = new ArrayList<>();
-        list.addAll(pathService.getNewReachablePoints(a, 1, 0));
+        list.addAll(pathService.getNewReachablePoints(b, 1, 0));
 
         assertEquals(list.size(), 2);
     }
@@ -108,12 +108,12 @@ public class PathServiceTest {
     }
 
     @Test
-    public void getNewReachablePointDelaysAnalysisOfMovesUntilDistanceMatches() {
+    public void handleReachedPointDelaysAnalysisOfMovesUntilDistanceMatches() {
         a.addPoints(b, c);
 
         pathService.getLegalMoves().put(b, 2);
         List<Point> newReachablePoints = new ArrayList<Point>();
-        newReachablePoints.addAll(pathService.getNewReachablePoints(b, 1, 1));
+        newReachablePoints.addAll(pathService.handleReachedPoint(b, 1, 1));
         assertEquals(newReachablePoints.size(), 1);
         assertTrue(newReachablePoints.contains(b));
     }
