@@ -19,42 +19,53 @@ import skynail.service.DiceRoller;
  *
  * @author lmantyla
  */
-public class MapControl {
+public class MapController {
 
-    Team player;
-    DiceRoller diceRoller;
-    MapPainter mapPainter;
-    Map<Point, Integer> legalMoves;
+    private Team player;
+    private DiceRoller diceRoller;
+    private MapPainter mapPainter;
+    private Map<Point, Integer> legalMoves;
+    private int moves;
 
-    public MapControl(Team player, DiceRoller diceRoller, MapPainter mapPainter) {
+    public MapController(Team player, DiceRoller diceRoller, MapPainter mapPainter) {
         this.player = player;
         this.diceRoller = diceRoller;
         this.mapPainter = mapPainter;
-        
+
         PathService pathService = new PathService(player);
         this.legalMoves = pathService.calculateLegalMoves(1);
     }
 
     // This function is called by MapListener, and supplies
     // MapPainter with information about available legal moves.
-    public boolean handlePointInput(Point point) {
+    public void handlePointInput(Point point) {
         List<Point> legalMoveList = new ArrayList<Point>();
         legalMoveList.addAll(legalMoves.keySet());
 
-        if (legalMoveList.contains(point))  {
-
+        if (legalMoves.containsKey(point)) {
             player.setLocation(point);
-            PathService pathService = new PathService(player);
-            int moves = diceRoller.diceThrow(2);
-
-            legalMoves = pathService.calculateLegalMoves(moves);
-            legalMoveList = new ArrayList<Point>();
-            legalMoveList.addAll(legalMoves.keySet());
+            moves = 0;
         }
+
+        update();
+    }
+
+    public int handleDiceRoll() {
+        moves = diceRoller.diceThrow(3);
+        update();
+        return moves;
+    }
+
+    public void update() {
+
+        PathService pathService = new PathService(player);
+        legalMoves = pathService.calculateLegalMoves(moves);
+            
+        List<Point> legalMoveList = new ArrayList<Point>();
+        legalMoveList.addAll(legalMoves.keySet());
 
         mapPainter.setLegalMoves(legalMoveList);
         mapPainter.update();
 
-        return true;
     }
 }

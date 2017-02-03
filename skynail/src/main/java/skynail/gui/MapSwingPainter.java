@@ -14,6 +14,7 @@ import java.util.List;
 import skynail.domain.Road;
 import skynail.domain.Point;
 import skynail.domain.Team;
+import skynail.game.MapController;
 
 /**
  *
@@ -25,12 +26,13 @@ public class MapSwingPainter extends JPanel implements MapPainter {
     List<Point> legalMoves;
     Team player;
     MapListener listener;
+    MapButtonListener buttonListener;
 
     public MapSwingPainter(List<Point> newWorldMap, Team newPlayer) {
         worldMap = newWorldMap;
         legalMoves = new ArrayList<>();
         player = newPlayer;
-
+        
         JPanel panel = new JPanel();
         this.add(panel);
         setSize(450, 450);
@@ -41,8 +43,10 @@ public class MapSwingPainter extends JPanel implements MapPainter {
         listener = new MapListener(field, worldMap);
         this.addMouseListener(listener);
 
-        JButton button = new JButton("Does nothing yet.");
+        buttonListener = new MapButtonListener(field);
+        JButton button = new JButton("Roll dice.");
         //button.setBounds(20, 20, 100, 30);
+        button.addActionListener(buttonListener);
         panel.add(button);
     }
 
@@ -83,4 +87,13 @@ public class MapSwingPainter extends JPanel implements MapPainter {
     public void setLegalMoves(List<Point> legalMoves) {
         this.legalMoves = legalMoves;
     }
+
+    @Override
+    public void setController(MapController controller) {
+        listener.setController(controller);
+        buttonListener.setController(controller);
+        
+    }
+    
+    
 }

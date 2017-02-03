@@ -16,7 +16,7 @@ import java.util.List;
 import skynail.domain.Point;
 
 import skynail.domain.Team;
-import skynail.game.MapControl;
+import skynail.game.MapController;
 
 /**
  *
@@ -26,14 +26,14 @@ public class MapListener implements MouseListener {
 
     private JTextField tieto;
     List<Point> worldMap;
-    MapControl control;
+    MapController control;
 
     public MapListener(JTextField tieto, List<Point> worldMap) {
         this.tieto = tieto;
         this.worldMap = worldMap;
     }
     
-    public void setMapControl(MapControl control) {
+    public void setController(MapController control) {
         this.control = control;
     }
 

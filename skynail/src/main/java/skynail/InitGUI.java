@@ -60,23 +60,16 @@ public class InitGUI {
         List<Point> worldPoints = new ArrayList<>();
 
         worldPoints.addAll(Arrays.asList(a, b, c, d, e, f, g));
-        /*worldPoints.add(b);
-        worldPoints.add(c);
-        worldPoints.add(d);
-        worldPoints.add(e);
-        worldPoints.add(f);
-        worldPoints.add(g);*/
-
         
         Team player = new Team("Pelaaja", a);
         MapSwingPainter mapPainter = new MapSwingPainter(worldPoints, player);
 
         DiceRoller diceRoller = new RandomRoller();
         
-        MapControl control = new MapControl(player, diceRoller, mapPainter);
-        control.handlePointInput(a);
-        mapPainter.getMapListener().setMapControl(control);
-
+        MapController controller = new MapController(player, diceRoller, mapPainter);
+        controller.handlePointInput(a);
+        mapPainter.setController(controller);
+        
         frame.getContentPane().add(mapPainter);
         frame.setVisible(true);
     }

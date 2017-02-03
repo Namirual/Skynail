@@ -33,7 +33,7 @@ public class MapControlTest {
 
     Team player;
 
-    MapControl mapControl;
+    MapController mapControl;
 
     private class StaticRoller implements DiceRoller {
 
@@ -55,6 +55,10 @@ public class MapControlTest {
             this.legalMoves = legalMoves;
         }
 
+        @Override
+        public void setController(MapController controller) {
+        }
+
         public void update() {
 
         }
@@ -73,8 +77,7 @@ public class MapControlTest {
 
         DiceRoller diceRoller = new StaticRoller();
         MapPainter painter = new BlankPainter();
-        mapControl = new MapControl(player, diceRoller, painter);
-
+        mapControl = new MapController(player, diceRoller, painter);
     }
 
     @After
@@ -85,5 +88,12 @@ public class MapControlTest {
     public void mapControlMovesPlayerTeam() {
         mapControl.handlePointInput(b);
         assertEquals(player.getLocation(), b);
+    }
+
+    @Test
+    public void diceRollMoreThanZero() {
+        int luku = 0;
+        luku = mapControl.handleDiceRoll();
+        assertNotEquals(luku, 0);
     }
 }

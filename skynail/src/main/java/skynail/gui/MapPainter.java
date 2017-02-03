@@ -7,6 +7,7 @@ package skynail.gui;
 
 import java.util.List;
 import skynail.domain.Point;
+import skynail.game.MapController;
 
 /**
  *
@@ -16,6 +17,8 @@ public interface MapPainter {
 
     public void setLegalMoves(List<Point> legalMoveList);
 
+    public void setController(MapController controller);
+    
     public void update();
 
 }
