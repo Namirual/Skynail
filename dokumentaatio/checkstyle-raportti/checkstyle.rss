@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 16,
+      <title>File: 18,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -103,6 +103,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#skynail.gui.MapPainter.java">skynail/gui/MapPainter.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#skynail.gui.UIManager.java">skynail/gui/UIManager.java</a>
                 </td>
                 <td>
                   0
@@ -214,6 +228,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#skynail.gui.CityScene.java">skynail/gui/CityScene.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#skynail.domain.Road.java">skynail/domain/Road.java</a>
                 </td>
                 <td>
@@ -228,7 +256,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#skynail.gui.MapSwingPainter.java">skynail/gui/MapSwingPainter.java</a>
+                  <a href="${project.url}/checkstyle.html#skynail.domain.Team.java">skynail/domain/Team.java</a>
                 </td>
                 <td>
                   0
@@ -242,7 +270,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#skynail.domain.Team.java">skynail/domain/Team.java</a>
+                  <a href="${project.url}/checkstyle.html#skynail.gui.GUIManager.java">skynail/gui/GUIManager.java</a>
                 </td>
                 <td>
                   0

@@ -7,9 +7,9 @@ Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoit
 
 **Suunnitteluvaiheen luokkakaavio**
 
-![Viikon 2 luokkakaavio](Luokkakaaviovko3.png)
+![Viikon 4 luokkakaavio](Luokkakaaviovko4.png)
 
-Luokkakaavio kuvaa ohjelman rakennetta viikolla 3, jossa viikkoon 2 nähden on lisätty Swingillä toteutettu graafinen käyttöliittymä verkossa liikkumista varten sekä erillinen nopanheitto. Graafisen käyttöliittymän luokkien riippuvuudet ovat nyt tarpeettoman monimutkaiset, ja sitä voisi jatkossa selkiyttää. 
+Luokkakaavio kuvaa ohjelman rakennetta viikolla 4. Graafisen käyttöliittymän rakennetta on muutettu selkeämmäksi ja hierarkisemmaksi lisäämällä rajapinta UIManager, jonka aliluokka GUIManager hoitaa graafisen käyttöliittymän toiminnan. CityScene on uusi käyttöliittymäelementti joka hoitaa tapahtumat kaupungissa. 
 
 **Kartta**
 
@@ -34,3 +34,4 @@ Taistelut tapahtuvat omassa erillisessä ruudussaan. Taistelut ovat vuoropohjais
 
 * Pelaa vuoro
 	* pelaaja heittää noppia ja siirtyy kartalla noppaluvun verran.
+* Tee ostoksia kaupungissa

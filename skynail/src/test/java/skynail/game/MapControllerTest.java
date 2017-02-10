@@ -122,6 +122,20 @@ public class MapControllerTest {
     }
 
     @Test
+    public void mapControlProducesListOfLegalMoves() {
+        mapController.handleDiceRoll();
+        TestUIManager manager = (TestUIManager) uiManager;
+        assertEquals(manager.legalMoves.size(), 2);
+    }
+
+    @Test
+    public void afterLegalMovementZeroLegalMoves() {
+        mapController.handlePointInput(b);
+        TestUIManager manager = (TestUIManager) uiManager;
+        assertEquals(manager.legalMoves.size(), 0);
+    }
+
+    @Test
     public void CanMoveMoreThanOneStep() {
         mapController.handleDiceRoll();
         mapController.handlePointInput(c);

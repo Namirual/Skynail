@@ -11,10 +11,9 @@ import skynail.gui.MapPoint;
 
 /**
  * Specialised map point for cities, presently unfinished.
- * 
+ *
  * @author lmantyla
  */
-
 public class City implements Point {
 
     String name;
@@ -25,6 +24,12 @@ public class City implements Point {
     public City(String name) {
         this.name = name;
         this.points = new ArrayList<>();
+    }
+
+    public City(String name, String introText) {
+        this.name = name;
+        this.points = new ArrayList<>();
+        this.introText = introText;
     }
 
     public City(String name, String introText, MapPoint mapPoint) {
@@ -43,7 +48,7 @@ public class City implements Point {
     public MapPoint getMapPoint() {
         return mapPoint;
     }
-    
+
     @Override
     public void addPointsBothWays(Point... newPoints) {
         for (Point point : newPoints) {
@@ -60,7 +65,7 @@ public class City implements Point {
     public String getIntroText() {
         return introText;
     }
-    
+
     @Override
     public List<Point> getLinkedPoints() {
         return points;
