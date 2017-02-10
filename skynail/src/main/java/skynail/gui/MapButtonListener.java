@@ -6,7 +6,8 @@
 package skynail.gui;
 
 /**
- *
+ * ButtonListener, probably superfluous and should be put in MapPainter.
+ * 
  * @author lmantyla
  */
 
@@ -18,19 +19,16 @@ import skynail.game.MapController;
 public class MapButtonListener implements ActionListener {
 
     private JTextField tekstiKentta;
-    private MapController controller; 
+    private UIManager manager; 
     
-    public MapButtonListener(JTextField tekstiKentta) {
+    public MapButtonListener(JTextField tekstiKentta, UIManager manager) {
         this.tekstiKentta = tekstiKentta;
+        this.manager = manager;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        int roll = controller.handleDiceRoll();
+        int roll = manager.getMapController().handleDiceRoll();
         this.tekstiKentta.setText("Your dire roll is " + roll);
-    }
-
-    public void setController(MapController controller) {
-        this.controller = controller;
     }
 }

@@ -9,7 +9,8 @@ import java.util.List;
 import skynail.gui.MapPoint;
 
 /**
- *
+ * Interface for map points.
+ * 
  * @author lmantyla
  */
 public interface Point {

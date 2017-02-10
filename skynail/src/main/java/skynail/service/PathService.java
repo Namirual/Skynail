@@ -14,7 +14,8 @@ import skynail.domain.Team;
 import skynail.domain.Point;
 
 /**
- *
+ * Service for finding available legal moves and generating paths. 
+ * 
  * @author lmantyla
  */
 public class PathService {
@@ -22,6 +23,10 @@ public class PathService {
     private Map<Point, Integer> legalMoves;
     final private Team team;
 
+    /**
+     *
+     * @param team The team this pathservice analyses.
+     */
     public PathService(Team team) {
         this.team = team;
         legalMoves = new HashMap<>();
@@ -35,6 +40,11 @@ public class PathService {
         this.legalMoves = legalMoves;
     }
 
+    /**
+     * Makes a list of legal moves a team can make on the map.
+     * @param moves Number of moves available this turn.
+     * @return Map of legal moves and the amount of moves needed to reach them.
+     */
     public Map<Point, Integer> calculateLegalMoves(int moves) {
         legalMoves = new HashMap<>();
         List<Point> reachablePoints = new ArrayList<>();
@@ -45,7 +55,7 @@ public class PathService {
         for (int distance = 0; distance < moves; distance++) {
             for (Point reachablePoint : reachablePoints) {
                 if (legalMoves.containsKey(reachablePoint)) {
-                    newReachablePoints.addAll(handleReachedPoint(reachablePoint, moves, distance));
+                    newReachablePoints.addAll(handleReachedPoint(reachablePoint, distance));
                 } else {
                     newReachablePoints.addAll(getNewReachablePoints(reachablePoint, moves, distance));
                 }
@@ -62,9 +72,19 @@ public class PathService {
         return legalMoves;
     }
 
-    // If a reachable point has a higher distance than is currently examined, examining it
-    // is delayed until the loop's distance catches up. Therefore the original point is returned.
-    public List<Point> handleReachedPoint(Point reachablePoint, int moves, int distance) {
+    /**
+     * Determines what to do with points that have already been reached once.
+     * <p>
+     * If a reachable point has a higher distance than is currently examined,
+     * examining it is delayed until the loop's distance catches up. Therefore
+     * the original point is returned to be added to the buffer of points to
+     * be examined.
+     * 
+     * @param reachablePoint point that has been reached
+     * @param distance distance from the player's position that the calculation has reached.
+     * @return
+     */
+    public List<Point> handleReachedPoint(Point reachablePoint, int distance) {
 
         if (legalMoves.get(reachablePoint) > distance) {
             return Arrays.asList(reachablePoint);
@@ -75,6 +95,14 @@ public class PathService {
         return reachablePoint.getLinkedPoints();
     }
 
+    /**
+     * Checks if a point reached by the search is a legal move.
+     * 
+     * @param reachablePoint point being examined
+     * @param moves number of moves this turn
+     * @param distance distance of the point from current position
+     * @return either empty list or the points linked to reachablePoint
+     */
     public List<Point> getNewReachablePoints(Point reachablePoint, int moves, int distance) {
 
         int movesRequired = reachablePoint.movesRequired(team);
@@ -95,8 +123,14 @@ public class PathService {
         }
     }
 
-    // Produces a route to a point found in legalMoves.
-    // The method works backwards towards the current team position.
+    /**
+     * Produces a route between the player and a selected legal move; the method works 
+     * backwards towards the current position of the team.
+     * 
+     * @param reachablePoint Point the player wants to reach.
+     * 
+     * @return
+     */
     public List<Point> getMovementRoute(Point reachablePoint) {
         List<Point> routePoints = new ArrayList<>();
 

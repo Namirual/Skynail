@@ -9,3 +9,5 @@ Päivä | Tunnit | Kuvaus
 27.01.2017 | 3.0h | Lisää testejä, Pit- ja CheckStyle -raportit, luokkakaavio
 31.01.2017 | 4.0h | Kartan piirtäminen Swingillä
 03.02.2017 | 5.0h | Graafinen käyttöliittymä, testit, dokumentit
+09.02.2017 | 3.0h | Käyttöliittymän rakenteen korjaaminen, UIManager
+10.02.2017 | 5.0h | Kaupunkinäkymä, lisää testejä, JavaDoc ja dokumentointi 

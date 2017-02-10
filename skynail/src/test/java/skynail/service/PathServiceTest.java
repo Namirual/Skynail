@@ -113,7 +113,7 @@ public class PathServiceTest {
 
         pathService.getLegalMoves().put(b, 2);
         List<Point> newReachablePoints = new ArrayList<Point>();
-        newReachablePoints.addAll(pathService.handleReachedPoint(b, 1, 1));
+        newReachablePoints.addAll(pathService.handleReachedPoint(b, 1));
         assertEquals(newReachablePoints.size(), 1);
         assertTrue(newReachablePoints.contains(b));
     }

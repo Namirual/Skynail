@@ -8,7 +8,8 @@ package skynail.service;
 import java.util.Random;
 
 /**
- *
+ * Dice rolling, separated as a class to make testing easier.
+ * 
  * @author lmantyla
  */
 public class RandomRoller implements DiceRoller {

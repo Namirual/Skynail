@@ -6,6 +6,7 @@
 package skynail.gui;
 
 /**
+ * Class used by the graphical UI to store the positions of map points.
  *
  * @author lmantyla
  */

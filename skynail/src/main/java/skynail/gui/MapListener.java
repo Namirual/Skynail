@@ -19,23 +19,25 @@ import skynail.domain.Team;
 import skynail.game.MapController;
 
 /**
- *
+ * MouseListener that receives mouse input on the map.
+ * 
  * @author lmantyla
  */
 public class MapListener implements MouseListener {
 
     private JTextField tieto;
     List<Point> worldMap;
-    MapController control;
+    UIManager manager;
 
-    public MapListener(JTextField tieto, List<Point> worldMap) {
+    public MapListener(JTextField tieto, List<Point> worldMap, UIManager manager) {
         this.tieto = tieto;
         this.worldMap = worldMap;
+        this.manager = manager;
     }
     
-    public void setController(MapController control) {
+    /*public void setController(MapController control) {
         this.control = control;
-    }
+    }*/
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -44,7 +46,7 @@ public class MapListener implements MouseListener {
         for (Point point : worldMap) {
             if (point.getMapPoint().checkIfInside(e.getX(), e.getY())) {
                 tieto.setText("Point Clicked! " + e.getX() + " " + e.getY());
-                control.handlePointInput(point);
+                manager.getMapController().handlePointInput(point);
 
                 return;
                 

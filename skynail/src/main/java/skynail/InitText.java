@@ -12,7 +12,8 @@ import skynail.domain.Point;
 import skynail.domain.Team;
 
 /**
- *
+ * Initialisation used for TextControl.
+ * 
  * @author lmantyla
  */
 public class InitText {

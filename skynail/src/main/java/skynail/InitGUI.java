@@ -19,19 +19,28 @@ import javax.swing.*;
 import skynail.domain.Road;
 import skynail.domain.Team;
 import skynail.gui.MapPoint;
-import skynail.gui.MapSwingPainter;
+import skynail.gui.MapPainter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import skynail.domain.Road;
+import skynail.domain.City;
+
 import skynail.domain.Point;
 import skynail.domain.Team;
 
 import skynail.game.*;
+import skynail.gui.GUIManager;
 import skynail.service.DiceRoller;
 import skynail.service.RandomRoller;
+
+/**
+ * Initialisation for the graphical user interface.
+ * 
+ * @author lmantyla
+ */
 
 public class InitGUI {
 
@@ -50,27 +59,30 @@ public class InitGUI {
         Road e = new Road("Test 5", new MapPoint(150, 130));
         Road f = new Road("Test 6", new MapPoint(190, 110));
         Road g = new Road("Test 7", new MapPoint(180, 150));
+        City h = new City("Test 8", "Welcome to Corneria!", new MapPoint(170, 200));
 
         a.addPointsBothWays(b);
         b.addPointsBothWays(c, d);
         c.addPointsBothWays(d);
         d.addPointsBothWays(e);
         e.addPointsBothWays(f, g);
+        g.addPointsBothWays(h);
 
         List<Point> worldPoints = new ArrayList<>();
 
-        worldPoints.addAll(Arrays.asList(a, b, c, d, e, f, g));
-        
-        Team player = new Team("Pelaaja", a);
-        MapSwingPainter mapPainter = new MapSwingPainter(worldPoints, player);
+        worldPoints.addAll(Arrays.asList(a, b, c, d, e, f, g, h));
 
+        Team player = new Team("Pelaaja", a);
+                
+        GUIManager manager = new GUIManager(worldPoints);                
         DiceRoller diceRoller = new RandomRoller();
         
-        MapController controller = new MapController(player, diceRoller, mapPainter);
+        MapController controller = new MapController(player, diceRoller, manager);
+        manager.setMapController(controller);
+
         controller.handlePointInput(a);
-        mapPainter.setController(controller);
         
-        frame.getContentPane().add(mapPainter);
+        frame.getContentPane().add(manager);
         frame.setVisible(true);
     }
 }

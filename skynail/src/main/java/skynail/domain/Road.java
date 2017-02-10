@@ -10,10 +10,11 @@ import java.util.List;
 import skynail.gui.MapPoint;
 
 /**
- *
+ * Simple map point.
+ * 
  * @author lmantyla
  */
-// Simplest type of map point.
+
 public class Road implements Point {
 
     String name;

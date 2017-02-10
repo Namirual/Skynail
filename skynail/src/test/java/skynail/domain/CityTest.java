@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package skynail.service;
+package skynail.domain;
 
 /**
- * Interface for dice rolling.
- * 
+ *
  * @author lmantyla
  */
-public interface DiceRoller {
-
-    int diceThrow(int luku); 
+public class CityTest {
+    
 }

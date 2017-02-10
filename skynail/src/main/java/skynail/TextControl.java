@@ -15,9 +15,11 @@ import skynail.domain.Team;
 import skynail.service.PathService;
 
 /**
- *
+ * Early text control interface, does not interact with MapController.
+ * 
  * @author lmantyla
  */
+
 public class TextControl {
 
     Team player;
