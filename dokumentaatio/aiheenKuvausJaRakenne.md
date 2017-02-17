@@ -30,11 +30,11 @@ Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seura
 
 *Nopanheitto:*
 
-![Sekvenssikaavio 1](Sekvenssikaavio1.png)
+![Sekvenssikaavio 1](sekvenssikaavio1.png)
 
 *Liikkuminen kartalla:*
 
-![Sekvenssikaavio 2](Sekvenssikaavio2.png)
+![Sekvenssikaavio 2](sekvenssikaavio2.png)
 
 Kaavio kuvaa käyttöliittymän päällekkäisyyttä: kun pelaaja saapuu kaupunkiin tai luolastoon, luodaan uusi käyttöliittymä. Tämän aikaa mapController ja sen käyttöliittymäluokat mapPainter ja mapListener säilyvät taustalla, ja niihin palataan kun taistelu tai kaupunkikäynti päättyvät.
 
