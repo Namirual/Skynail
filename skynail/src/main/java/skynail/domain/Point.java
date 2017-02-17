@@ -17,7 +17,7 @@ public interface Point {
 
     List<Point> getLinkedPoints();
 
-    int movesRequired(Team team);
+    int movesRequired(Player team);
     
     MapPoint getMapPoint();
 

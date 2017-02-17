@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import skynail.domain.City;
 import skynail.domain.Point;
+import skynail.game.BattleController;
 import skynail.game.MapController;
 
 /**
@@ -19,12 +20,16 @@ public interface UIManager {
     
     public void setMapPainter(MapPainter mapPainter);
 
-    public void updateMap(List<Point> legalMoveList);
+    public void displayMapMovement(List<Point> pathPoints);
 
     public void startCityScene(City city);
 
-    public void endCityScene(City city);
+    public void endCityScene();
 
+    public void startBattleScene(BattleController battleController);
+
+    public void endBattleScene();
+    
     public MapController getMapController();
 
     public void setMapController(MapController mapController);

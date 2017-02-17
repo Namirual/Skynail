@@ -27,7 +27,7 @@ import skynail.domain.City;
  */
 public class CityScene extends JPanel {
 
-    CityScene(UIManager manager, City city) {
+    CityScene(GUIManager manager, City city) {
 
         //setSize(450, 450);
         JLabel label = new JLabel(city.getIntroText());
@@ -52,7 +52,7 @@ public class CityScene extends JPanel {
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manager.endCityScene(city);
+                manager.endCityScene();
             }
         });
 

@@ -48,25 +48,7 @@ public class CityTest {
     }
 
     @Test
-    public void addingLinkedPointsWorks() {
-        a.addPoints(b);
-        assertEquals(a.getLinkedPoints().size(), 1);
-    }
-
-    @Test
-    public void addingMoreThanOneWorks() {
-        a.addPoints(b, c);
-        assertEquals(a.getLinkedPoints().size(), 2);
-    }
-
-    @Test
-    public void addingBothWaysWorks() {
-        a.addPointsBothWays(b);
-        assertEquals(b.getLinkedPoints().size(), 1);
-    }
-
-    @Test
-    public void roadRequiresOneMove() {
-        assertEquals(b.movesRequired(new Team("testi", a)), 1);
+    public void cityRequiresOneMove() {
+        assertEquals(b.movesRequired(new Player("testi", a)), 1);
     }
 }

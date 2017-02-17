@@ -12,19 +12,48 @@ package skynail.gui;
  */
 public class MapPoint {
 
-    private int x;
-    private int y;
+    private float x;
+    private float y;
 
     public MapPoint(int x, int y) {
         this.x = x;
         this.y = y;
     }
+    
+    public MapPoint(MapPoint mapPoint) {
+        this.x = mapPoint.x;
+        this.y = mapPoint.y;
+    }
 
     public int getX() {
-        return x;
+        return Math.round(x);
     }
 
     public int getY() {
+        return Math.round(y);
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setXf(float x) {
+        this.x = x;
+    }
+
+    public void setYf(float y) {
+        this.y = y;
+    }
+
+    public float getXf() {
+        return x;
+    }
+
+    public float getYf() {
         return y;
     }
 

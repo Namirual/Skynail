@@ -5,6 +5,7 @@
  */
 package skynail.game;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import skynail.domain.City;
 import skynail.domain.Point;
 
 import skynail.domain.Road;
-import skynail.domain.Team;
+import skynail.domain.Player;
 import skynail.gui.MapListener;
 import skynail.gui.MapPainter;
 import skynail.gui.UIManager;
@@ -34,7 +35,7 @@ public class MapControllerTest {
     Road c;
     Road d;
 
-    Team player;
+    Player player;
 
     MapController mapController;
 
@@ -51,47 +52,6 @@ public class MapControllerTest {
         }
     }
 
-    static class TestUIManager implements UIManager {
-
-        List<Point> worldMap;
-        List<Point> legalMoves;
-
-        @Override
-        public void updateMap(List<Point> legalMoveList) {
-            legalMoves = legalMoveList;
-        }
-
-        @Override
-        public void startCityScene(City city) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void endCityScene(City city) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void setMapController(MapController mapController) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public MapPainter getMapPainter() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public void setMapPainter(MapPainter mapPainter) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
-        public MapController getMapController() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-    }
-
     @Before
     public void setUp() {
         a = new Road("Test 1");
@@ -103,16 +63,24 @@ public class MapControllerTest {
         b.addPointsBothWays(c);
         c.addPointsBothWays(d);
 
-        player = new Team("Pelaaja", a);
+        player = new Player("Pelaaja", a);
 
         uiManager = new TestUIManager();
 
         DiceRoller diceRoller = new StaticRoller();
-        mapController = new MapController(player, diceRoller, uiManager);
+        mapController = new MapController(player, Arrays.asList(a, b, c, d), diceRoller, uiManager);
     }
 
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void gettersRequiredByUIWork() {
+        assertEquals(mapController.getPlayer(), player);
+        assertEquals(mapController.getWorldMap().size(), 4);
+        assertEquals(mapController.getPathPoints().size(), 0);
+        assertEquals(mapController.isMoving(), false);
     }
 
     @Test
@@ -125,14 +93,14 @@ public class MapControllerTest {
     public void mapControlProducesListOfLegalMoves() {
         mapController.handleDiceRoll();
         TestUIManager manager = (TestUIManager) uiManager;
-        assertEquals(manager.legalMoves.size(), 2);
+        assertEquals(mapController.getLegalMoves().size(), 2);
     }
 
     @Test
     public void afterLegalMovementZeroLegalMoves() {
         mapController.handlePointInput(b);
         TestUIManager manager = (TestUIManager) uiManager;
-        assertEquals(manager.legalMoves.size(), 0);
+        assertEquals(mapController.getLegalMoves().size(), 0);
     }
 
     @Test

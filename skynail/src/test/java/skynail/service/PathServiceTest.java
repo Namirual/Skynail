@@ -17,7 +17,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import skynail.domain.Road;
 import skynail.domain.Point;
-import skynail.domain.Team;
+import skynail.domain.Player;
 import skynail.service.PathService;
 
 /**
@@ -32,7 +32,7 @@ public class PathServiceTest {
     Road d;
     Road e;
 
-    Team player;
+    Player player;
     Map<Point, Integer> legalMoves;
     PathService pathService;
 
@@ -47,7 +47,7 @@ public class PathServiceTest {
         d = new Road("Test 3");
         e = new Road("Test 4");
 
-        player = new Team("Pelaaja", a);
+        player = new Player("Pelaaja", a);
 
         legalMoves = new HashMap<Point, Integer>();
 
@@ -119,7 +119,35 @@ public class PathServiceTest {
     }
 
     @Test
-    public void getNewReachablePointReturnsEmptyWhenBetterLegalMoveExists() {
+    public void handleReachedPointReturnsEmptyWhenBetterRouteExists() {
+        a.addPoints(b);
+        b.addPoints(c);
+        c.addPoints(d);
+        c.addPoints(e);
+
+        pathService.getLegalMoves().put(c, 2);
+        List<Point> newReachablePoints = new ArrayList<Point>();
+        newReachablePoints.addAll(pathService.handleReachedPoint(c, 2));
+        assertEquals(newReachablePoints.size(), 2);
+        assertTrue(newReachablePoints.contains(d));
+        assertTrue(newReachablePoints.contains(e));
+
+    }
+
+    @Test
+    public void handleReachedPointReturnsPointsWhenDistanceIsCorrect() {
+        a.addPoints(b);
+        b.addPoints(c);
+
+        pathService.getLegalMoves().put(c, 1);
+        List<Point> newReachablePoints = new ArrayList<Point>();
+        newReachablePoints.addAll(pathService.handleReachedPoint(c, 2));
+        assertEquals(newReachablePoints.size(), 0);
+        assertFalse(newReachablePoints.contains(c));
+    }
+
+    @Test
+    public void getNewReachablePointsReturnsEmptyWhenBetterLegalMoveExists() {
         a.addPoints(b);
         b.addPoints(c);
 
@@ -131,7 +159,7 @@ public class PathServiceTest {
     }
 
     @Test
-    public void getNewReachablePointContinuesWhenDistanceMatchesLegalMoveDistance() {
+    public void getNewReachablePointsContinuesWhenDistanceMatchesLegalMoveDistance() {
         a.addPoints(b);
         b.addPoints(c);
         c.addPoints(d);
@@ -151,7 +179,7 @@ public class PathServiceTest {
         d.addPoints(c);
 
         legalMoves = pathService.calculateLegalMoves(3);
-        List<Point> route = pathService.getMovementRoute(d);
+        List<Point> route = pathService.getMovementPath(d);
 
         assertEquals(route.size(), 4);
         assertTrue(route.get(3) == a);
@@ -167,7 +195,7 @@ public class PathServiceTest {
 
         legalMoves = pathService.calculateLegalMoves(3);
 
-        List<Point> route = pathService.getMovementRoute(d);
+        List<Point> route = pathService.getMovementPath(d);
 
         assertEquals(route.size(), 3);
         assertTrue(route.get(1) == e);
@@ -181,6 +209,6 @@ public class PathServiceTest {
 
         legalMoves = pathService.calculateLegalMoves(2);
 
-        assertEquals(pathService.getMovementRoute(d).size(), 0);
+        assertEquals(pathService.getMovementPath(d).size(), 0);
     }
 }

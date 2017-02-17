@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import skynail.service.PathService;
 import static org.junit.Assert.*;
+import skynail.gui.MapPoint;
 
 /**
  *
@@ -42,6 +43,12 @@ public class RoadTest {
     }
 
     @Test
+    public void creationWithMapPointWorks() {
+        Road test = (new Road("Test", new MapPoint(10, 10)));
+        assertEquals(test.getMapPoint().getX(), 10);
+    }
+
+    @Test
     public void addingLinkedPointsWorks() {
         a.addPoints(b);
         assertEquals(a.getLinkedPoints().size(), 1);
@@ -58,10 +65,10 @@ public class RoadTest {
         a.addPointsBothWays(b);
         assertEquals(b.getLinkedPoints().size(), 1);
     }
-    
+
     @Test
     public void roadRequiresOneMove() {
-        assertEquals(b.movesRequired(new Team("testi", a)), 1);
+        assertEquals(b.movesRequired(new Player("testi", a)), 1);
     }
 
 }

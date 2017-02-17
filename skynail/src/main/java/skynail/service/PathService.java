@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Arrays;
-import skynail.domain.Team;
+import skynail.domain.Player;
 import skynail.domain.Point;
 
 /**
@@ -21,14 +21,14 @@ import skynail.domain.Point;
 public class PathService {
 
     private Map<Point, Integer> legalMoves;
-    final private Team team;
+    final private Player player;
 
     /**
      *
-     * @param team The team this pathservice analyses.
+     * @param player The player from whose perspective the path is being searched.
      */
-    public PathService(Team team) {
-        this.team = team;
+    public PathService(Player player) {
+        this.player = player;
         legalMoves = new HashMap<>();
     }
 
@@ -48,11 +48,13 @@ public class PathService {
     public Map<Point, Integer> calculateLegalMoves(int moves) {
         legalMoves = new HashMap<>();
         List<Point> reachablePoints = new ArrayList<>();
-        List<Point> newReachablePoints = new ArrayList<>();
 
-        reachablePoints.addAll(team.getLocation().getLinkedPoints());
+        reachablePoints.addAll(player.getLocation().getLinkedPoints());
 
-        for (int distance = 0; distance < moves; distance++) {
+        int distance = 0;
+
+        while (reachablePoints.size() > 0) {
+            List<Point> newReachablePoints = new ArrayList<>();
             for (Point reachablePoint : reachablePoints) {
                 if (legalMoves.containsKey(reachablePoint)) {
                     newReachablePoints.addAll(handleReachedPoint(reachablePoint, distance));
@@ -60,13 +62,10 @@ public class PathService {
                     newReachablePoints.addAll(getNewReachablePoints(reachablePoint, moves, distance));
                 }
             }
-            if (reachablePoints.contains(team.getLocation())) {
-                reachablePoints.remove(team.getLocation());
-            }
+
             reachablePoints.clear();
             reachablePoints.addAll(newReachablePoints);
-
-            newReachablePoints.clear();
+            distance++;
         }
 
         return legalMoves;
@@ -82,7 +81,7 @@ public class PathService {
      * 
      * @param reachablePoint point that has been reached
      * @param distance distance from the player's position that the calculation has reached.
-     * @return
+     * @return list of points linked to the point, only when distance is correct. 
      */
     public List<Point> handleReachedPoint(Point reachablePoint, int distance) {
 
@@ -105,16 +104,16 @@ public class PathService {
      */
     public List<Point> getNewReachablePoints(Point reachablePoint, int moves, int distance) {
 
-        int movesRequired = reachablePoint.movesRequired(team);
+        int movesRequired = reachablePoint.movesRequired(player);
 
-        if (reachablePoint.equals(team.getLocation())) {
+        if (reachablePoint.equals(player.getLocation())) {
             return new ArrayList<>();
         }
 
-        if (movesRequired > 1 && movesRequired <= moves - distance) {
+        /*if (movesRequired > 1 && movesRequired <= moves - distance) {
             legalMoves.put(reachablePoint, distance + movesRequired);
             return new ArrayList<Point>();
-        }
+        }*/
         if (movesRequired > 0 && movesRequired <= moves - distance) {
             legalMoves.put(reachablePoint, distance + movesRequired);
             return reachablePoint.getLinkedPoints();
@@ -124,37 +123,37 @@ public class PathService {
     }
 
     /**
-     * Produces a route between the player and a selected legal move; the method works 
+     * Produces a path between the player and a selected legal move; the method works 
      * backwards towards the current position of the team.
      * 
      * @param reachablePoint Point the player wants to reach.
      * 
-     * @return
+     * @return list of points leading to the current point.
      */
-    public List<Point> getMovementRoute(Point reachablePoint) {
-        List<Point> routePoints = new ArrayList<>();
+    public List<Point> getMovementPath(Point reachablePoint) {
+        List<Point> pathPoints = new ArrayList<>();
 
         if (!legalMoves.containsKey(reachablePoint)) {
-            return routePoints;
+            return pathPoints;
         }
 
         int currentLowestDistance = legalMoves.get(reachablePoint);
         Point currentPoint = reachablePoint;
 
-        routePoints.add(currentPoint);
+        pathPoints.add(currentPoint);
 
-        while (!currentPoint.equals(team.getLocation())) {
+        while (!currentPoint.equals(player.getLocation())) {
             for (Point point : currentPoint.getLinkedPoints()) {
-                if (point.equals(team.getLocation())) {
-                    currentPoint = team.getLocation();
+                if (point.equals(player.getLocation())) {
+                    currentPoint = player.getLocation();
                 } else if (legalMoves.containsKey(point) && legalMoves.get(point) < currentLowestDistance) {
                     currentLowestDistance = legalMoves.get(point);
                     currentPoint = point;
                 }
             }
-            routePoints.add(currentPoint);
+            pathPoints.add(currentPoint);
         }
 
-        return routePoints;
+        return pathPoints;
     }
 }

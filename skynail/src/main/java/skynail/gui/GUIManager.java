@@ -10,7 +10,9 @@ import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.JPanel;
 import skynail.domain.City;
+import skynail.domain.Dungeon;
 import skynail.domain.Point;
+import skynail.game.BattleController;
 import skynail.game.MapController;
 
 /**
@@ -24,12 +26,13 @@ public class GUIManager extends JPanel implements UIManager {
     MapListener mapListener;
     MapController mapController;
     CityScene scene;
+    BattleScene bScene;
 
-    public GUIManager(List<Point> worldMap) {
+    public GUIManager() {
         setSize(600, 600);
         setLayout(new BorderLayout());
 
-        MapPainter mapPainter = new MapPainter(worldMap, this);
+        MapPainter mapPainter = new MapPainter(this);
         this.setMapPainter(mapPainter);
     }
 
@@ -42,10 +45,11 @@ public class GUIManager extends JPanel implements UIManager {
         this.add(mapPainter);
     }
 
-    public void updateMap(List<Point> legalMoveList) {
-        mapPainter.setLegalMoves(legalMoveList);
-        mapPainter.update();
-
+    public void displayMapMovement(List<Point> pathPoints) {
+        if (mapController.isMoving()) {
+            mapPainter.movePath(pathPoints);
+        }
+        //mapPainter.update();
     }
 
     public void startCityScene(City city) {
@@ -55,9 +59,23 @@ public class GUIManager extends JPanel implements UIManager {
         scene.setVisible(true);
     }
 
-    public void endCityScene(City city) {
+    public void endCityScene() {
         mapPainter.setVisible(true);
         scene.setVisible(false);
+        scene = null;
+    }
+
+    public void startBattleScene(BattleController battleController) {
+        bScene = new BattleScene(this, battleController);
+        this.add(bScene);
+        mapPainter.setVisible(false);
+        bScene.setVisible(true);
+    }
+
+    public void endBattleScene() {
+        mapPainter.setVisible(true);
+        bScene.setVisible(false);
+        bScene = null;
     }
 
     public MapController getMapController() {

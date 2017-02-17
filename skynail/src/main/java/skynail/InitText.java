@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.Scanner;
 import skynail.domain.Road;
 import skynail.domain.Point;
-import skynail.domain.Team;
+import skynail.domain.Player;
 
 /**
  * Initialisation used for TextControl.
@@ -41,7 +41,7 @@ public class InitText {
         h.addPoints(g, i);
         i.addPoints(h);
 
-        Team player = new Team("Pelaaja", a);
+        Player player = new Player("Pelaaja", a);
 
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();

@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
 import skynail.domain.Point;
-import skynail.domain.Team;
+import skynail.domain.Player;
 import skynail.service.PathService;
 
 /**
@@ -22,11 +22,11 @@ import skynail.service.PathService;
 
 public class TextControl {
 
-    Team player;
+    Player player;
     Scanner scanner;
     Random random;
 
-    public TextControl(Team player, Scanner scanner, Random random) {
+    public TextControl(Player player, Scanner scanner, Random random) {
         this.player = player;
         this.scanner = scanner;
         this.random = random;
@@ -66,7 +66,7 @@ public class TextControl {
         } else if (target >= legalMoveList.size() + 1) {
             System.out.println("Please select a legal move.");
         } else {
-            writeRoute(pathService.getMovementRoute(legalMoveList.get(target - 1)));
+            writeRoute(pathService.getMovementPath(legalMoveList.get(target - 1)));
 
             player.setLocation(legalMoveList.get(target - 1));
         }

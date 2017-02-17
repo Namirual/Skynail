@@ -61,7 +61,7 @@ public class Road implements Point {
     }
 
     @Override
-    public int movesRequired(Team team) {
+    public int movesRequired(Player team) {
         return 1;
     }
 

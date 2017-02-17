@@ -15,7 +15,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import skynail.domain.Point;
 
-import skynail.domain.Team;
+import skynail.domain.Player;
 import skynail.game.MapController;
 
 /**
@@ -26,12 +26,10 @@ import skynail.game.MapController;
 public class MapListener implements MouseListener {
 
     private JTextField tieto;
-    List<Point> worldMap;
-    UIManager manager;
+    GUIManager manager;
 
-    public MapListener(JTextField tieto, List<Point> worldMap, UIManager manager) {
+    public MapListener(JTextField tieto, GUIManager manager) {
         this.tieto = tieto;
-        this.worldMap = worldMap;
         this.manager = manager;
     }
     
@@ -43,11 +41,11 @@ public class MapListener implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         tieto.setText(e.getX() + " " + e.getY());
 
-        for (Point point : worldMap) {
+        for (Point point : manager.getMapController().getWorldMap()) {
             if (point.getMapPoint().checkIfInside(e.getX(), e.getY())) {
                 tieto.setText("Point Clicked! " + e.getX() + " " + e.getY());
                 manager.getMapController().handlePointInput(point);
-
+                manager.getMapPainter().update();
                 return;
                 
             }
