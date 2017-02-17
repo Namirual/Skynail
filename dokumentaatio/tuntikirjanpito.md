@@ -11,3 +11,6 @@ Päivä | Tunnit | Kuvaus
 03.02.2017 | 5.0h | Graafinen käyttöliittymä, testit, dokumentit
 09.02.2017 | 3.0h | Käyttöliittymän rakenteen korjaaminen, UIManager
 10.02.2017 | 5.0h | Kaupunkinäkymä, lisää testejä, JavaDoc ja dokumentointi 
+13.02.2017 | 4.0h | Taistelunäkymän luonti aloitettu
+16.02.2017 | 5.0h | Animoitu liikkuminen kartalla, lisää testejä
+17.02.2017 | 8.0h | Refaktorointia, sekvenssikaaviot, lisää testejä 

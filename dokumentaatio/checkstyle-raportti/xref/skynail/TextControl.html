@@ -19,7 +19,7 @@
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <strong class="jxr_keyword">import</strong> java.util.Random;
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <strong class="jxr_keyword">import</strong> java.util.Scanner;
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">import</strong> skynail.domain.Point;
-<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> skynail.domain.Team;
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <strong class="jxr_keyword">import</strong> skynail.domain.Player;
 <a class="jxr_linenumber" name="L15" href="#L15">15</a>  <strong class="jxr_keyword">import</strong> skynail.service.PathService;
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">/**</em>
@@ -30,11 +30,11 @@
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../skynail/TextControl.html">TextControl</a> {
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <a href="../skynail/domain/Team.html">Team</a> player;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>      <a href="../skynail/domain/Player.html">Player</a> player;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>      Scanner scanner;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>      Random random;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <a href="../skynail/TextControl.html">TextControl</a>(<a href="../skynail/domain/Team.html">Team</a> player, Scanner scanner, Random random) {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <a href="../skynail/TextControl.html">TextControl</a>(<a href="../skynail/domain/Player.html">Player</a> player, Scanner scanner, Random random) {
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>          <strong class="jxr_keyword">this</strong>.player = player;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">this</strong>.scanner = scanner;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          <strong class="jxr_keyword">this</strong>.random = random;
@@ -74,7 +74,7 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (target &gt;= legalMoveList.size() + 1) {
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>              System.out.println(<span class="jxr_string">"Please select a legal move."</span>);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>              writeRoute(pathService.getMovementRoute(legalMoveList.get(target - 1)));
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>              writeRoute(pathService.getMovementPath(legalMoveList.get(target - 1)));
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>              player.setLocation(legalMoveList.get(target - 1));
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          }
