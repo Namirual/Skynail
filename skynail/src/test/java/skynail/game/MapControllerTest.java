@@ -82,6 +82,15 @@ public class MapControllerTest {
         assertEquals(mapController.getPathPoints().size(), 0);
         assertEquals(mapController.isMoving(), false);
     }
+    
+    @Test
+    public void settersWork() {
+        Player player2 = new Player("Toinen pelaaja", b);
+        mapController.setPlayer(player2);
+        assertEquals(mapController.getPlayer().getName(), "Toinen pelaaja");
+        mapController.setWorldMap(Arrays.asList(a, b));
+        assertEquals(mapController.getWorldMap().size(), 2);
+    }
 
     @Test
     public void mapControlMovesPlayerTeam() {
@@ -143,5 +152,12 @@ public class MapControllerTest {
         player.setGold(99);
         assertFalse(mapController.handleCityBuy());
         assertEquals(player.getGold(), 99);
+    }
+
+    @Test
+    public void victoryInBattleResultIncreasesGold() {
+        player.setGold(100);
+        mapController.processBattleResult(BattleState.victory);
+        assertTrue(player.getGold() > 100);
     }
 }

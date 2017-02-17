@@ -11,8 +11,8 @@ package skynail.domain;
  */
 public class Monster extends GameCharacter {
 
-    public Monster(int HP, int attack) {
-        super(HP, attack);
+    public Monster(int hp, int attack) {
+        super(hp, attack);
         this.name = "Monster";
     }
 }

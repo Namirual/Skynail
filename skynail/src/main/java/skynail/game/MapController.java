@@ -42,9 +42,10 @@ public class MapController {
     /**
      * Initializes the Map Controller.
      *
-     * @param player
-     * @param uiManager
-     * @param diceRoller
+     * @param player current player
+     * @param worldMap all the points in the current game
+     * @param uiManager user interface currently in use
+     * @param diceRoller currently used dice roller
      */
     public MapController(Player player, List<Point> worldMap, DiceRoller diceRoller, UIManager uiManager) {
         this.player = player;
@@ -88,11 +89,20 @@ public class MapController {
             if (point.getClass().equals(Dungeon.class)) {
                 Dungeon dungeon = (Dungeon) point;
                 BattleController battleController = new BattleController(uiManager, player, dungeon.getMonster());
-                BattleState bState = battleController.startBattle();
-                if (bState == BattleState.victory) {
-                    player.setGold(player.getGold() + 150);
-                }
+                BattleState battleState = battleController.startBattle();
+                processBattleResult(battleState);
             }
+        }
+    }
+
+    /**
+     * Processes rewards or other changes at the end of the battle, unfinished.
+     *
+     * @param battleState state at the end of the battle.
+     */
+    public void processBattleResult(BattleState battleState) {
+        if (battleState == BattleState.victory) {
+            player.setGold(player.getGold() + 150);
         }
     }
 
@@ -110,6 +120,8 @@ public class MapController {
 
     /**
      * Used to make purchases in cities, currently unfinished.
+     *
+     * @return true if transaction is successful
      */
     public boolean handleCityBuy() {
         return player.buyWithGold(100);

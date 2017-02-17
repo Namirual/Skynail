@@ -32,7 +32,7 @@ public class MapPainter extends JPanel {
     public MapPainter(GUIManager manager) {
         this.manager = manager;
 
-       JPanel panel = new JPanel();
+        JPanel panel = new JPanel();
         this.add(panel);
         setSize(450, 450);
 

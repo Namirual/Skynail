@@ -27,7 +27,7 @@ import skynail.game.BattleState;
 public class BattleScene extends JPanel {
 
     private GUIManager manager;
-            
+
     private JLabel label;
     private JLabel label2;
     private JButton button1;
@@ -77,13 +77,13 @@ public class BattleScene extends JPanel {
                     label.setText("Monster HP " + controller.getMonster().getHP());
                     label2.setText("You hit the monster!");
                 }
-                
-                 if (state == BattleState.enemyTurn) {
+
+                if (state == BattleState.enemyTurn) {
                     writeCompanions();
                     label.setText("Monster HP " + controller.getMonster().getHP());
                     label2.setText("You hit the monster, and the monster strikes back!");
                 }
-                
+
                 if (state == BattleState.victory) {
                     label.setText("Monster HP " + controller.getMonster().getHP());
                     victoryScene();
@@ -94,15 +94,12 @@ public class BattleScene extends JPanel {
             }
         });
 
-        button2.addActionListener(
-                new ActionListener() {
+        button2.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 manager.endBattleScene();
             }
-        }
-        );
+        });
 
         buttonPanel = new JPanel();
         buttonPanel.add(button1);
