@@ -43,7 +43,7 @@ public class DungeonTest {
     public void creationWithIntroTextAndMonsterWorks() {
         Dungeon test = (new Dungeon("Test", "intro", new Monster(20, 4), new MapPoint(1, 1)));
         assertEquals(test.getIntroText(), "intro");
-        assertEquals(test.getMonster().getHP(), 20);
+        assertEquals(test.getMonsters().get(0).getHP(), 20);
     }
 
     @Test

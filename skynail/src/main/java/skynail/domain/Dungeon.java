@@ -16,7 +16,7 @@ import skynail.gui.MapPoint;
 public class Dungeon extends Road implements Point {
 
     int treasure;
-    Monster monster;
+    List<Monster> monsters;
 
     String introText;
 
@@ -28,7 +28,8 @@ public class Dungeon extends Road implements Point {
         super(name, mapPoint);
         this.introText = introText;
         this.mapPoint = mapPoint;
-        this.monster = monster;
+        this.monsters = new ArrayList<Monster>();
+        monsters.add(monster);
     }
 
     @Override
@@ -40,11 +41,15 @@ public class Dungeon extends Road implements Point {
         return introText;
     }
 
-    public Monster getMonster() {
-        return monster;
+    public List<Monster> getMonsters() {
+        return monsters;
+    }
+    
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
     }
 
-    public void setMonster(Monster monster) {
-        this.monster = monster;
+    public void setMonsters(List<Monster> monsters) {
+        this.monsters = monsters;
     }
 }

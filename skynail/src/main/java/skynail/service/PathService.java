@@ -146,6 +146,7 @@ public class PathService {
             for (Point point : currentPoint.getLinkedPoints()) {
                 if (point.equals(player.getLocation())) {
                     currentPoint = player.getLocation();
+                    break;
                 } else if (legalMoves.containsKey(point) && legalMoves.get(point) < currentLowestDistance) {
                     currentLowestDistance = legalMoves.get(point);
                     currentPoint = point;

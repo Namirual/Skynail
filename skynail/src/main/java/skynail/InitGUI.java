@@ -50,14 +50,14 @@ public class InitGUI {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Skynail");
-        frame.setPreferredSize(new Dimension(450, 450));
-        frame.setSize(450, 450);
+        frame.setPreferredSize(new Dimension(480, 480));
+        frame.setSize(480, 480);
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Road a = new Road("Test 1", new MapPoint(20, 50));
         Road b = new Road("Test 2", new MapPoint(60, 110));
-        Road c = new Road("Test 3", new MapPoint(70, 160));
+        Dungeon c = new Dungeon("Test 3", "Grotto", new Monster(35, 6), new MapPoint(70, 160));
         Road d = new Road("Test 4", new MapPoint(120, 110));
         Road e = new Road("Test 5", new MapPoint(150, 130));
         Road f = new Road("Test 6", new MapPoint(190, 110));
@@ -65,6 +65,8 @@ public class InitGUI {
         City h = new City("Test 8", "Welcome to Corneria!", new MapPoint(170, 200));
         Dungeon i = new Dungeon("Test 9", "Dungeon!", new Monster(20, 5), new MapPoint(250, 220));
 
+        c.addMonster(new Monster(15, 3));
+        c.addMonster(new Monster(20, 4));
 
         a.addPointsBothWays(b);
         b.addPointsBothWays(c, d);

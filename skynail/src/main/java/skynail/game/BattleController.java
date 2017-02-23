@@ -5,11 +5,13 @@
  */
 package skynail.game;
 
+import java.util.List;
 import skynail.domain.Companion;
 import skynail.domain.Player;
 import skynail.domain.GameCharacter;
 import skynail.domain.Monster;
 import skynail.gui.UIManager;
+import skynail.service.DiceRoller;
 
 /**
  * Controller for battles against monsters.
@@ -19,7 +21,8 @@ import skynail.gui.UIManager;
 public class BattleController {
 
     private UIManager uiManager;
-    private Monster monster;
+    private DiceRoller diceRoller;
+    private List<Monster> monsters;
     private Player player;
 
     private BattleState state;
@@ -31,20 +34,23 @@ public class BattleController {
      *
      * @param uiManager UI manager in use.
      * @param player Current player.
-     * @param monster Monster.
+     * @param monsters Monster.
      */
-    public BattleController(UIManager uiManager, Player player, Monster monster) {
+    public BattleController(UIManager uiManager, DiceRoller diceRoller, Player player, List<Monster> monsters) {
         this.uiManager = uiManager;
+        this.diceRoller = diceRoller;
+
         this.player = player;
 
-        this.monster = monster;
+        this.monsters = monsters;
 
         this.state = BattleState.playerTurn;
         this.characterTurn = 0;
     }
 
     /**
-     * Starts the battle by telling the UI Manager to create the battle user interface.
+     * Starts the battle by telling the UI Manager to create the battle user
+     * interface.
      *
      * @return battle state at the end of the battle.
      */
@@ -63,8 +69,28 @@ public class BattleController {
         if (state == BattleState.playerTurn) {
             monster.reduceHP(player.getCompanions().get(characterTurn).getAttack());
         }
-        characterTurn++;
+        nextCharacterTurn();
         return updateGameState();
+    }
+    
+    public BattleState handlePlayerHealing(Companion companion) {
+        if (state == BattleState.playerTurn) {
+            companion.healHP(20);
+        }
+        nextCharacterTurn();
+        return updateGameState();
+    }
+
+    public void nextCharacterTurn() {
+        while (true) {
+            characterTurn++;
+            if (characterTurn >= player.getCompanions().size()) {
+                return;
+            }
+            if (player.getCompanions().get(characterTurn).getHP() > 0) {
+                return;
+            }
+        }
     }
 
     /**
@@ -73,7 +99,13 @@ public class BattleController {
      * @return state of the battle.
      */
     public BattleState updateGameState() {
-        if (monster.getHP() <= 0) {
+        for (int num = 0; num < monsters.size(); num++) {
+            if (monsters.get(num).getHP() <= 0) {
+                monsters.remove(monsters.get(num));
+            }
+        }
+
+        if (monsters.size() <= 0) {
             return BattleState.victory;
         }
 
@@ -100,7 +132,11 @@ public class BattleController {
      * Handles enemy attacks on player, currently very primitive.
      */
     public void enemyTurn() {
-        player.getCompanions().get(0).reduceHP(monster.getAttack());
+        for (Monster monster : monsters) {
+            int attacked = diceRoller.diceThrow(player.getCompanions().size()) - 1;
+
+            player.getCompanions().get(attacked).reduceHP(monster.getAttack());
+        }
     }
 
     public int getCharacterTurn() {
@@ -115,7 +151,7 @@ public class BattleController {
         return player;
     }
 
-    public Monster getMonster() {
-        return monster;
+    public List<Monster> getMonsters() {
+        return monsters;
     }
 }

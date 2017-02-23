@@ -81,17 +81,19 @@ public class MapController {
 
             moves = 0;
             legalMoves.clear();
+        }
+    }
 
-            if (point.getClass().equals(City.class)) {
-                uiManager.startCityScene((City) point);
-            }
+    public void handeEnteringArea() {
+        Point point = player.getLocation();
+        if (point.getClass().equals(City.class)) {
+            uiManager.startCityScene((City) point);
+        }
 
-            if (point.getClass().equals(Dungeon.class)) {
-                Dungeon dungeon = (Dungeon) point;
-                BattleController battleController = new BattleController(uiManager, player, dungeon.getMonster());
-                BattleState battleState = battleController.startBattle();
-                processBattleResult(battleState);
-            }
+        if (point.getClass().equals(Dungeon.class)) {
+            Dungeon dungeon = (Dungeon) point;
+            BattleController battleController = new BattleController(uiManager, diceRoller, player, dungeon.getMonsters());
+            BattleState battleState = battleController.startBattle();
         }
     }
 
