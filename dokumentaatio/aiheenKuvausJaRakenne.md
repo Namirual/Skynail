@@ -7,7 +7,7 @@ Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoit
 
 **Suunnitteluvaiheen luokkakaavio**
 
-Luokkakaaviot kuvaavat ohjelman rakennetta viikolla 6. Viikolla 6 peliin toteutettiin esineet, esineiden käyttö taisteluissa ja esineiden ostaminen kaupungeissa. Tämän seurauksena myös pelilogiikan luokkarakenne muuttui entistä monimutkaisemmaksi, joten jain luokkakaavion kolmeen osaan, joista kukin kuvastaa yhtä pelin osa-aluetta: karttaa, taistelukohtauksia ja kaupunkikohtauksia.
+Luokkakaaviot kuvaavat ohjelman rakennetta viikolla 6. Viikolla 6 peliin tuli uusina ominaisuuksina useampi hirviö taistelussa sekä esineiden käyttö taisteluissa ja niiden ostaminen kaupungeissa. Tämän seurauksena myös pelilogiikan luokkarakenne muuttui entistä monimutkaisemmaksi, joten jaoin luokkakaavion kolmeen osaan, joista kukin kuvastaa yhtä pelin osa-aluetta: karttaa, taistelukohtauksia ja kaupunkikohtauksia.
 
 ![Viikon 6 luokkakaavio](Luokkakaaviovko6Map.png)
 
@@ -19,7 +19,7 @@ Kaupunkikohtaukset alkavat pelaajan saavuttua City-tyyppiseen karttapisteeseen, 
 
 ![Viikon 6 luokkakaavio](Luokkakaaviovko6Battle.png)
 
-Taistelukohtaukset alkavat pelaajan saavuttua Dungeon-tyyppiseen karttapisteeseen, jolloin MapController luo uuden BattleController-olion. Taistelunäkymällä on oma graafinen käyttöliittymäluokkansa BattleScene. BattleScene käyttää Dungeon-luokasta otettua listaa hirviöistä sekä pelaajan Companion- ja Item-luokista koostuvia listoja. Monster ja Companion ovat perivät ydintoiminnallisuutensa GameCharacter-luokalta.
+Taistelukohtaukset alkavat pelaajan saavuttua Dungeon-tyyppiseen karttapisteeseen, jolloin MapController luo uuden BattleController-olion. Taistelunäkymällä on oma graafinen käyttöliittymäluokkansa BattleScene. BattleController käyttää Dungeon-luokasta otettua listaa hirviöistä sekä pelaajan Companion- ja Item-luokista koostuvia listoja. Monster ja Companion ovat perivät ydintoiminnallisuutensa GameCharacter-luokalta.
 
 **Sekvenssikaaviot**
 
