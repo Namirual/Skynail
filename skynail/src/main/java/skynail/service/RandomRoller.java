@@ -16,12 +16,16 @@ public class RandomRoller implements DiceRoller {
 
     Random random;
 
+    /**
+     * Creates new RandomRoller.
+     */
     public RandomRoller() {
         this.random = new Random();
     }
 
-    public int diceThrow(int luku) {
-        return random.nextInt(luku) + 1;
+    @Override
+    public int diceThrow(int number) {
+        return random.nextInt(number) + 1;
     }
 
 }

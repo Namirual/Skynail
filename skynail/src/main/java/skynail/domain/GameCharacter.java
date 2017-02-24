@@ -41,7 +41,7 @@ public class GameCharacter {
 
     /**
      * Reduces health by the amount of damage indicated.
-     * @param damage
+     * @param damage Amount of damage taken
      */
     public void reduceHP(int damage) {
         hp -= damage;
@@ -49,7 +49,7 @@ public class GameCharacter {
 
     /**
      * Increases health by the amount indicated up to maximum health.
-     * @param healing
+     * @param healing Amount of healing
      */
     public void healHP(int healing) {
         hp += healing;

@@ -13,6 +13,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import skynail.domain.Companion;
+import skynail.domain.Item;
 import skynail.domain.Player;
 import skynail.domain.Monster;
 import skynail.domain.Road;
@@ -31,7 +32,7 @@ public class BattleControllerTest {
     Player player;
 
     List<Monster> monsters;
-    
+
     private class StaticRoller implements DiceRoller {
 
         @Override
@@ -45,14 +46,14 @@ public class BattleControllerTest {
         player = new Player("Pelaaja", new Road("testi"));
         player.addCompanions(new Companion(30, 6, "Hero"), new Companion(20, 4, "Sidekick"));
         uiManager = new TestUIManager();
-        
+
         monsters = new ArrayList<Monster>();
         monsters.add(new Monster(15, 4));
 
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
 
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -61,7 +62,7 @@ public class BattleControllerTest {
     public void battleSceneIsStarted() {
         uiManager = new TestUIManager();
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
-        battleController.startBattle();
+        uiManager.startBattleScene(battleController);
         TestUIManager testManager = (TestUIManager) uiManager;
         assertEquals(testManager.battle, true);
     }
@@ -117,11 +118,19 @@ public class BattleControllerTest {
     }
 
     public void enemyAttacksDuringEnemyTurn() {
-        player = new Player("Pelaaja", new Road("testi"));
-        player.addCompanions(new Companion(5, 6, "Hero"));
-
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
         battleController.enemyTurn();
         assertEquals(player.getCompanions().get(0).getHP(), 1);
+    }
+
+    public void canUseItems() {
+        Item potion = new Item("Potion", -15);
+        player.addItem(potion, 3);
+        
+        player.getCompanions().get(1).reduceHP(5);
+
+        battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
+        battleController.handleItemUse(player.getCompanions().get(1), potion);
+        assertEquals(player.getCompanions().get(1).getHP(), 20);
     }
 }

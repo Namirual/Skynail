@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import skynail.domain.City;
 import skynail.domain.Point;
 import skynail.game.BattleController;
+import skynail.game.CityController;
 import skynail.game.MapController;
 
 /**
@@ -22,7 +23,7 @@ public interface UIManager {
 
     public void displayMapMovement(List<Point> pathPoints);
 
-    public void startCityScene(City city);
+    public void startCityScene(CityController cityController);
 
     public void endCityScene();
 

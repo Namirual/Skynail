@@ -12,5 +12,10 @@ package skynail.service;
  */
 public interface DiceRoller {
 
-    int diceThrow(int luku); 
+    /**
+     * Handles a dice throw.
+     * @param number maximum highest number the throw may be.
+     * @return a random number.
+     */
+    int diceThrow(int number); 
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import skynail.domain.Companion;
 import skynail.domain.Player;
 import skynail.domain.GameCharacter;
+import skynail.domain.Item;
 import skynail.domain.Monster;
 import skynail.gui.UIManager;
 import skynail.service.DiceRoller;
@@ -33,6 +34,7 @@ public class BattleController {
      * Creates new BattleController.
      *
      * @param uiManager UI manager in use.
+     * @param diceRoller diceRoller for the controller.
      * @param player Current player.
      * @param monsters Monster.
      */
@@ -49,17 +51,6 @@ public class BattleController {
     }
 
     /**
-     * Starts the battle by telling the UI Manager to create the battle user
-     * interface.
-     *
-     * @return battle state at the end of the battle.
-     */
-    public BattleState startBattle() {
-        uiManager.startBattleScene(this);
-        return state;
-    }
-
-    /**
      * Handles UI command to attack a monster.
      *
      * @param monster The monster that the player attacks.
@@ -72,15 +63,32 @@ public class BattleController {
         nextCharacterTurn();
         return updateGameState();
     }
-    
-    public BattleState handlePlayerHealing(Companion companion) {
+
+    /**
+     * Handles usage of an item in combat.
+     *
+     * @param target GameCharacter being targeted with an item.
+     * @param item Item currnetly being used.
+     * @return current BattleState derived from updateGameState.
+     */
+    public BattleState handleItemUse(GameCharacter target, Item item) {
         if (state == BattleState.playerTurn) {
-            companion.healHP(20);
+            if (item.getPotency() < 0) {
+                target.healHP(Math.abs(item.getPotency()));
+            } else {
+                target.reduceHP(item.getPotency());
+            }
         }
+        
+        player.reduceItemsByOne(item);
+        
         nextCharacterTurn();
         return updateGameState();
     }
 
+    /**
+     * Changes whose turn it is.
+     */
     public void nextCharacterTurn() {
         while (true) {
             characterTurn++;
@@ -132,6 +140,7 @@ public class BattleController {
      * Handles enemy attacks on player, currently very primitive.
      */
     public void enemyTurn() {
+
         for (Monster monster : monsters) {
             int attacked = diceRoller.diceThrow(player.getCompanions().size()) - 1;
 
@@ -154,4 +163,5 @@ public class BattleController {
     public List<Monster> getMonsters() {
         return monsters;
     }
+
 }

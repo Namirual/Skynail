@@ -24,7 +24,7 @@ public class PathService {
     final private Player player;
 
     /**
-     *
+     * Creates new PathService.
      * @param player The player from whose perspective the path is being searched.
      */
     public PathService(Player player) {

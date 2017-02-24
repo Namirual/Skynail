@@ -6,7 +6,7 @@
 package skynail.game;
 
 /**
- *
+ * Enumerator for the situation of a battle scene.
  * @author lmantyla
  */
 public enum BattleState {

@@ -18,6 +18,10 @@ import skynail.domain.Player;
  */
 public class InitText {
 
+    /**
+     * Initialises and creates map for the old TextControl class.
+     * @param args Command line arguments.
+     */
     public static void oldMain(String[] args) {
         Road a = new Road("West 1");
         Road b = new Road("West 2");

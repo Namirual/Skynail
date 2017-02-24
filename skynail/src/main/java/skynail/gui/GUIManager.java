@@ -14,6 +14,7 @@ import skynail.domain.City;
 import skynail.domain.Dungeon;
 import skynail.domain.Point;
 import skynail.game.BattleController;
+import skynail.game.CityController;
 import skynail.game.MapController;
 
 /**
@@ -53,8 +54,8 @@ public class GUIManager extends JPanel implements UIManager {
         //mapPainter.update();
     }
 
-    public void startCityScene(City city) {
-        scene = new CityScene(this, city);
+    public void startCityScene(CityController cityController) {
+        scene = new CityScene(this, cityController);
         this.add(scene);
         mapPainter.setVisible(false);
         scene.setVisible(true);

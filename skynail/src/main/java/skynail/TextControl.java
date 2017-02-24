@@ -15,7 +15,7 @@ import skynail.domain.Player;
 import skynail.service.PathService;
 
 /**
- * Early text control interface, does not interact with MapController.
+ * Early text control UI, does not interact with MapController.
  * 
  * @author lmantyla
  */
@@ -26,12 +26,21 @@ public class TextControl {
     Scanner scanner;
     Random random;
 
+    /**
+     * Creates text control interface.
+     * @param player Current player.
+     * @param scanner Scanner for reading input.
+     * @param random Randomiser.
+     */
     public TextControl(Player player, Scanner scanner, Random random) {
         this.player = player;
         this.scanner = scanner;
         this.random = random;
     }
 
+    /**
+     * Starts text game.
+     */
     public void startTextGame() {
         System.out.println("Welcome, " + player.getName());
         System.out.println("You have up to 3 moves each turn. Use numbers to move, 0 to quit.");
@@ -42,6 +51,11 @@ public class TextControl {
         }
     }
 
+    /**
+     * Handles player moves.
+     * @param pathService PathService for producing paths.
+     * @return Returns true when legal move is selected.
+     */
     public boolean handlePlayerMove(PathService pathService) {
         int moves = random.nextInt(3) + 1;
         System.out.println("You have " + moves + " moves. You are now in " + player.getLocation().getName());
@@ -73,6 +87,10 @@ public class TextControl {
         return true;
     }
 
+    /**
+     * Writes each point visited by the player during a move.
+     * @param route List of points from the PathService.
+     */
     public void writeRoute(List<Point> route) {
         System.out.print("Traveling from " + route.get(route.size() - 1).getName());
         for (int routeLength = route.size() - 2; routeLength > 0; routeLength--) {

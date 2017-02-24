@@ -15,6 +15,7 @@ import org.junit.Test;
 import skynail.service.PathService;
 import static org.junit.Assert.*;
 import skynail.domain.City;
+import skynail.domain.Dungeon;
 import skynail.domain.Point;
 
 import skynail.domain.Road;
@@ -82,7 +83,7 @@ public class MapControllerTest {
         assertEquals(mapController.getPathPoints().size(), 0);
         assertEquals(mapController.isMoving(), false);
     }
-    
+
     @Test
     public void settersWork() {
         Player player2 = new Player("Toinen pelaaja", b);
@@ -134,30 +135,24 @@ public class MapControllerTest {
     }
 
     @Test
-    public void canBuy() {
-        player.setGold(200);
-        assertTrue(mapController.handleCityBuy());
-        assertEquals(player.getGold(), 100);
-    }
-
-    @Test
-    public void canBuyThingsWithExactGold() {
-        player.setGold(100);
-        assertTrue(mapController.handleCityBuy());
-        assertEquals(player.getGold(), 0);
-    }
-
-    @Test
-    public void cannotBuyWhenNotEnoughGold() {
-        player.setGold(99);
-        assertFalse(mapController.handleCityBuy());
-        assertEquals(player.getGold(), 99);
-    }
-
-    @Test
     public void victoryInBattleResultIncreasesGold() {
         player.setGold(100);
         mapController.processBattleResult(BattleState.victory);
         assertTrue(player.getGold() > 100);
+    }
+
+    @Test
+    public void enteringCityStartsCityScene() {
+        City city = new City("Area");
+        mapController.getPlayer().setLocation(city);
+        mapController.handleEnteringArea();
+    }
+
+    @Test
+    public void enteringDungeonStartsBattleScene() {
+        Dungeon dungeon = new Dungeon("Dungeon");
+        mapController.getPlayer().setLocation(dungeon);
+
+        mapController.handleEnteringArea();
     }
 }

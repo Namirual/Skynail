@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import skynail.domain.Companion;
 import skynail.domain.Monster;
 
+import skynail.domain.Item;
+
 import skynail.game.BattleController;
 import skynail.game.BattleState;
 
@@ -33,7 +35,7 @@ public class BattleScene extends JPanel {
 
     private GUIManager manager;
 
-    private JLabel label;
+    private JLabel label1;
     private JLabel label2;
     private JButton button1;
     private JButton button2;
@@ -44,6 +46,8 @@ public class BattleScene extends JPanel {
     private JPanel companionPanel;
     private JPanel monsterPanel;
     private JPanel buttonPanel;
+
+    private Item currentItem;
 
     BattleScene(GUIManager manager, BattleController controller) {
 
@@ -62,13 +66,15 @@ public class BattleScene extends JPanel {
         bottomPanels.setLayout(new BoxLayout(bottomPanels, BoxLayout.PAGE_AXIS));
         this.add(bottomPanels, BorderLayout.SOUTH);
 
-        label2 = new JLabel("Fight it out!");
+        label1 = new JLabel("No item selected.");
+        label2 = new JLabel("");
 
         monsterPanel = new JPanel();
         companionPanel = new JPanel();
 
         JPanel messagePanel = new JPanel();
 
+        messagePanel.add(label1);
         messagePanel.add(label2);
 
         JPanel statPanel = new JPanel();
@@ -79,32 +85,24 @@ public class BattleScene extends JPanel {
         statPanel.add(monsterPanel);
         statPanel.add(companionPanel);
 
-        writeCombatants();
+        update();
 
-        button1 = new JButton("Attack!");
+        button1 = new JButton("Use item!");
         button2 = new JButton("Escape!");
 
-        button1.addActionListener(
-                new ActionListener() {
+        button1.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
-                BattleState state = controller.handlePlayerAttack(controller.getMonsters().get(0));
-                System.out.println("Battlestate: " + state);
-                writeCombatants();
+            public void actionPerformed(ActionEvent e) {
+                itemSelection();
             }
-        }
-        );
+        });
 
-        button2.addActionListener(
-                new ActionListener() {
+        button2.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e
-            ) {
+            public void actionPerformed(ActionEvent e) {
                 manager.endBattleScene();
             }
-        }
-        );
+        });
 
         buttonPanel = new JPanel();
 
@@ -132,9 +130,11 @@ public class BattleScene extends JPanel {
         }
     }
 
-    public void writeCombatants() {
+    public void update() {
         graphicPanel.removeAll();
+        
         monsterPanel.removeAll();
+
         monsterPanel.setLayout(new GridLayout(controller.getMonsters().size(), 1));
         int monsterHeight = 50;
 
@@ -149,7 +149,7 @@ public class BattleScene extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     BattleState state = controller.handlePlayerAttack(controller.getMonsters().get(finalNum));
                     checkState(state);
-                    writeCombatants();
+                    update();
                 }
             });
 
@@ -163,7 +163,6 @@ public class BattleScene extends JPanel {
 
         companionPanel.removeAll();
         companionPanel.setLayout(new GridLayout(controller.getPlayer().getCompanions().size(), 1));
-        //graphicPanel.removeAll();
 
         int charHeight = 50;
 
@@ -182,8 +181,13 @@ public class BattleScene extends JPanel {
             character.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    BattleState state = controller.handlePlayerHealing(controller.getPlayer().getCompanions().get(finalNum));
-                    writeCombatants();
+                    if (currentItem == null) {
+                        return;
+                    }
+                    BattleState state = controller.handleItemUse(controller.getPlayer().getCompanions().get(finalNum), currentItem);
+                    currentItem = null;
+                    label1.setText("No item selected.");
+                    update();
                     if (state == BattleState.playerTurn) {
                         label2.setText("You heal " + controller.getPlayer().getCompanions().get(finalNum).getName());
                     }
@@ -199,35 +203,57 @@ public class BattleScene extends JPanel {
             }
 
             companionPanel.add(charLabel);
+
             companionPanel.repaint();
-            monsterPanel.repaint();
             companionPanel.revalidate();
+
+            monsterPanel.repaint();
             monsterPanel.revalidate();
+
             graphicPanel.repaint();
             graphicPanel.revalidate();
         }
     }
 
-    /*public void paint(Graphics g) {
-        super.paint(g);
+    public void itemSelection() {
+        JDialog itemSelect = new JDialog();
 
-        Graphics2D graphics = (Graphics2D) g;
+        itemSelect.setPreferredSize(new Dimension(240, 240));
+        itemSelect.setSize(240, 240);
+        itemSelect.setLocationRelativeTo(this);
+        itemSelect.setModal(true);
+        itemSelect.setUndecorated(true);
 
-        List<Companion> companions = controller.getPlayer().getCompanions();
-        int charPositionX = 300;
-        int charPositionY = 50;
-        int monsterPositionX = 100;
-        int monsterPositionY = 50;
+        JButton leaveButton = new JButton("Return");
+        JPanel itemPanel = new JPanel();
+        itemSelect.getContentPane().add(itemPanel);
+        itemPanel.add(leaveButton);
 
-        for (Companion companion : companions) {
+        leaveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                itemSelect.setVisible(false);
+            }
+        });
 
-            graphics.setColor(Color.BLACK);
+        for (Item item : controller.getPlayer().getItems().keySet()) {
+            int itemNumber = controller.getPlayer().getItems().get(item);
 
-            graphics.fillOval(charPositionX, charPositionY, 20, 50);
-
-            charPositionY += 60;
+            JButton itemButton = new JButton(item.getName() + " : " + itemNumber);
+            
+            itemPanel.add(itemButton);
+            itemButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    currentItem = item;
+                    label1.setText("Current item: " + item.getName() + " : " + itemNumber);
+                    itemSelect.setVisible(false);
+                }
+            });
         }
-    }*/
+        itemSelect.setVisible(true);
+    }
+
     public void victoryScene() {
 
         JDialog victoryMessage = new JDialog();
@@ -251,6 +277,7 @@ public class BattleScene extends JPanel {
                 victoryMessage.dispose();
             }
         });
+        buttonPanel.remove(button1);
 
         endText.setText("You won the battle!");
 

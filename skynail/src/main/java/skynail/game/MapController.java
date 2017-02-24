@@ -84,16 +84,21 @@ public class MapController {
         }
     }
 
-    public void handeEnteringArea() {
+    /**
+     * Processes different area types the player may enter.
+     */
+    public void handleEnteringArea() {
         Point point = player.getLocation();
         if (point.getClass().equals(City.class)) {
-            uiManager.startCityScene((City) point);
+            City city = (City) point;
+            uiManager.startCityScene(new CityController(uiManager, player, city));
+
         }
 
         if (point.getClass().equals(Dungeon.class)) {
             Dungeon dungeon = (Dungeon) point;
             BattleController battleController = new BattleController(uiManager, diceRoller, player, dungeon.getMonsters());
-            BattleState battleState = battleController.startBattle();
+            uiManager.startBattleScene(battleController);
         }
     }
 
@@ -118,15 +123,6 @@ public class MapController {
         legalMoves = pathService.calculateLegalMoves(moves);
 
         return moves;
-    }
-
-    /**
-     * Used to make purchases in cities, currently unfinished.
-     *
-     * @return true if transaction is successful
-     */
-    public boolean handleCityBuy() {
-        return player.buyWithGold(100);
     }
 
     public Player getPlayer() {

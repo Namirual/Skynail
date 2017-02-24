@@ -29,6 +29,7 @@ import skynail.domain.Road;
 import skynail.domain.City;
 import skynail.domain.Companion;
 import skynail.domain.Dungeon;
+import skynail.domain.Item;
 
 import skynail.domain.Point;
 import skynail.domain.Player;
@@ -41,12 +42,15 @@ import skynail.service.RandomRoller;
 
 /**
  * Initialisation for the graphical user interface.
- * 
+ *
  * @author lmantyla
  */
-
 public class InitGUI {
-
+    
+    /**
+     * Initialises and creates map for the old TextControl class.
+     * @param args Command line arguments.
+     */
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Skynail");
@@ -68,6 +72,9 @@ public class InitGUI {
         c.addMonster(new Monster(15, 3));
         c.addMonster(new Monster(20, 4));
 
+        h.addItem(new Item("Potion", -15), 50);
+        h.addItem(new Item("Super Potion", -30), 150);
+
         a.addPointsBothWays(b);
         b.addPointsBothWays(c, d);
         c.addPointsBothWays(d);
@@ -75,22 +82,22 @@ public class InitGUI {
         e.addPointsBothWays(f, g);
         g.addPointsBothWays(h, i);
 
-        
         List<Point> worldPoints = new ArrayList<>();
 
         worldPoints.addAll(Arrays.asList(a, b, c, d, e, f, g, h, i));
 
         Player player = new Player("Pelaaja", a);
         player.addCompanions(new Companion(30, 6, "Hero"), new Companion(20, 4, "Sidekick"));
-        
-        GUIManager manager = new GUIManager();                
+        player.addItem(new Item("Potion", -15), 3);
+
+        GUIManager manager = new GUIManager();
         DiceRoller diceRoller = new RandomRoller();
-        
+
         MapController controller = new MapController(player, worldPoints, diceRoller, manager);
         manager.setMapController(controller);
 
         controller.handlePointInput(a);
-        
+
         frame.getContentPane().add(manager);
         frame.setVisible(true);
     }

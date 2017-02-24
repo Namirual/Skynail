@@ -15,15 +15,42 @@ import skynail.gui.MapPoint;
  */
 public interface Point {
 
+    /**
+     * Gets points liked to the Point.
+     * @return list of points.
+     */
     List<Point> getLinkedPoints();
 
-    int movesRequired(Player team);
+    /**
+     * Calculates the number of moves required to move to this point.
+     * 
+     * @param player the player for which the move is calculated.
+     * Any properties of the player may impact the calculation.
+     * @return Number of moves required to move to this point.
+     */
+    int movesRequired(Player player);
     
+    /**
+     * Returns the MapPoint containing the coordinates of the Point on the map.
+     * @return map point.
+     */
     MapPoint getMapPoint();
 
+    /**
+     * Adds another point as a connection to current point. 
+     * @param newPoints one or more points to be added.
+     */
     void addPoints(Point... newPoints);
 
+    /**
+     * Adds another point as connection and adds connection to that point.
+     * @param newPoints one or more points to be added.
+     */
     void addPointsBothWays(Point... newPoints);
 
+    /**
+     * Gets name of the point.
+     * @return name of the point.
+     */
     String getName();
 }

@@ -66,7 +66,7 @@ public class MapPainter extends JPanel {
         explore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                manager.getMapController().handeEnteringArea();
+                manager.getMapController().handleEnteringArea();
             }
         });
 
