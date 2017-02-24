@@ -117,16 +117,21 @@ public class BattleControllerTest {
         assertEquals(battleController.updateGameState(), BattleState.death);
     }
 
+    @Test
     public void enemyAttacksDuringEnemyTurn() {
+        player = new Player("Pelaaja", new Road("testi"));
+        player.addCompanions(new Companion(5, 6, "Hero"));
+
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
         battleController.enemyTurn();
         assertEquals(player.getCompanions().get(0).getHP(), 1);
     }
 
+    @Test
     public void canUseItems() {
         Item potion = new Item("Potion", -15);
         player.addItem(potion, 3);
-        
+
         player.getCompanions().get(1).reduceHP(5);
 
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);

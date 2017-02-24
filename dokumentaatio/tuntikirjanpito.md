@@ -13,4 +13,7 @@ Päivä | Tunnit | Kuvaus
 10.02.2017 | 5.0h | Kaupunkinäkymä, lisää testejä, JavaDoc ja dokumentointi 
 13.02.2017 | 4.0h | Taistelunäkymän luonti aloitettu
 16.02.2017 | 5.0h | Animoitu liikkuminen kartalla, lisää testejä
-17.02.2017 | 8.0h | Refaktorointia, sekvenssikaaviot, lisää testejä 
+17.02.2017 | 8.0h | Refaktorointia, sekvenssikaaviot, lisää testejä
+22.03.2017 | 3.0h | Taistelunäkymän jatkokehittämistä
+23.03.2017 | 4.0h | Lisää taistelunäkymää
+24.03.2017 | 6.0h | Kauppa, esinelista taistelussa, testit ja raportointi

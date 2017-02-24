@@ -7,24 +7,19 @@ Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoit
 
 **Suunnitteluvaiheen luokkakaavio**
 
-![Viikon 5 luokkakaavio](Luokkakaaviovko5.png)
+Luokkakaaviot kuvaavat ohjelman rakennetta viikolla 6. Viikolla 6 peliin toteutettiin esineet, esineiden käyttö taisteluissa ja esineiden ostaminen kaupungeissa. Tämän seurauksena myös pelilogiikan luokkarakenne muuttui entistä monimutkaisemmaksi, joten jain luokkakaavion kolmeen osaan, joista kukin kuvastaa yhtä pelin osa-aluetta: karttaa, taistelukohtauksia ja kaupunkikohtauksia.
 
-Luokkakaavio kuvaa ohjelman rakennetta viikolla 5. Karttasolmuluokat perivät nyt Road-luokan ominaisuudet sen lisäksi, että ne toteuttavat Point-rajapinnan, mikä vähentää päällekkäistä ohjelmakoodia. Käyttöliittymää on edelleen pyritty eriytettämään pelilogiikasta. 
+![Viikon 6 luokkakaavio](Luokkakaaviovko6Map.png)
 
-Ohjelmaan on uutena ominaisuutena tullut taistelukohtauksissa BattleController ja sen käyttöliittymä BattleScene. Entinen Team-luokka, nykyinen Player, sisältää nyt pelaajahahmoja, ja luolastot (Dungeon) sisältävät hirviöitä, jotka molemmat periytyvät geneerisestä GameCharacter-luokasta. GameCharacter sisältää taistelukohtauksissa käytettyä alkeellista peruslogiikkaa, jota alaluokat vaativat.
+Karttanäkymä on pelin päänäkymä, josta muut ikkunat avataan. Kartta koostuu erilaisista toisiinsa linkitetyistä pisteistä, jotka toteuttavat Point-rajapinnan. MapController käyttää PathService -palveluluokkaa, joka laskee mahdolliset siirrot pelaajalle. Näkymällä on graafinen käyttöliittymä, joka on yhteydessä karttanäkymän pelilogiikkaa toteuttavaan MapControlleriin UIManager-rajapinnan kautta.
 
-###Kartta
+![Viikon 6 luokkakaavio](Luokkakaaviovko6City.png)
 
-Kartalla liikkuminen muistuttaa perinteisiä lautapelejä, erityisesti Afrikan tähteä. Joka vuorolla pelaaja heittää noppaa ja siirtyy enintään noppaluvun määräämän lukumäärän. Pelilauta ei koostu ruuduista vaan solmuista, jotka muodostavat verkon; solmu yhdistyy siis aina yhteen tai useampaan solmuun. 
+Kaupunkikohtaukset alkavat pelaajan saavuttua City-tyyppiseen karttapisteeseen, jolloin MapController luo uuden CityController-olion. Kaupunkinäkymillä on oma graafinen käyttöliittymäluokkansa CityScene. Kaupungeissa on toiminnallisuus esineiden ostamiselle, jota varten on erillinen esine-luokka.
 
-Kartta toteutettiin alkuvaiheessa tekstipohjaisena ja tämän jälkeen graafisesti niin, että kartta näytetään verkostona. Graafisessa käyttöliittymässä pelaaja voi heittää noppaa, minkä jälkeen käyttöliittymä näyttää lailliset siirrot, joiden joukosta pelaaja voi valita hiirellä solmun, johon siirtyy. 
+![Viikon 6 luokkakaavio](Luokkakaaviovko6Battle.png)
 
-Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seuraa erityinen tapahtuma sen mukaan, mitä ominaisuuksia kohteella on. Kohdetyyppejä ovat esimerkiksi:
-
-* Luolasto
-	* Luolastossa on yksi tai useampi hirviö, joiden kanssa voi taistella. Jos pelaaja voittaa, pelaaja saa luolastossa sijaitsevan aarteen.
-* Kaupunki
-	* Kaupungeissa voi ostaa tavaroita.
+Taistelukohtaukset alkavat pelaajan saavuttua Dungeon-tyyppiseen karttapisteeseen, jolloin MapController luo uuden BattleController-olion. Taistelunäkymällä on oma graafinen käyttöliittymäluokkansa BattleScene. BattleScene käyttää Dungeon-luokasta otettua listaa hirviöistä sekä pelaajan Companion- ja Item-luokista koostuvia listoja. Monster ja Companion ovat perivät ydintoiminnallisuutensa GameCharacter-luokalta.
 
 **Sekvenssikaaviot**
 
@@ -39,9 +34,23 @@ Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seura
 Kaavio kuvaa käyttöliittymän päällekkäisyyttä: kun pelaaja saapuu kaupunkiin tai luolastoon, luodaan uusi käyttöliittymä. Tämän aikaa mapController ja sen käyttöliittymäluokat mapPainter ja mapListener säilyvät taustalla, ja niihin palataan kun taistelu tai kaupunkikäynti päättyvät.
 
 
+###Kartta
+
+Kartalla liikkuminen muistuttaa perinteisiä lautapelejä, erityisesti Afrikan tähteä. Joka vuorolla pelaaja heittää noppaa ja siirtyy enintään noppaluvun määräämän lukumäärän. Pelilauta ei koostu ruuduista vaan solmuista, jotka muodostavat verkon; solmu yhdistyy siis aina yhteen tai useampaan solmuun. 
+
+Kartta toteutettiin alkuvaiheessa tekstipohjaisena ja tämän jälkeen graafisesti niin, että kartta näytetään verkostona. Graafisessa käyttöliittymässä pelaaja voi heittää noppaa, minkä jälkeen käyttöliittymä näyttää lailliset siirrot, joiden joukosta pelaaja voi valita hiirellä solmun, johon siirtyy. 
+
+Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seuraa erityinen tapahtuma sen mukaan, mitä ominaisuuksia kohteella on. Kohdetyyppejä ovat esimerkiksi:
+
+* Luolasto
+	* Luolastossa on yksi tai useampi hirviö, joiden kanssa voi taistella. Jos pelaaja voittaa, pelaaja saa luolastossa sijaitsevan aarteen.
+* Kaupunki
+	* Kaupungeissa voi ostaa tavaroita.
+
+
 ###Taistelu
 
-Taistelut tapahtuvat omassa erillisessä ruudussaan. Pelaajalla voi olla useita hahmoja, jotka osallistuvat taisteluun. Taistelut ovat vuoropohjaisia ja pelaaja valitsee jokaiselle pelaajahahmolle komennon yksitellen. Tällä hetkellä hirviöitä on jokaisessa taistelussa ainoastaan yksi, pelin kehittyessä myös hirviöitä voi olla useita.
+Taistelut tapahtuvat omassa erillisessä ruudussaan. Pelaajalla voi olla useita hahmoja, jotka osallistuvat taisteluun. Taistelut ovat vuoropohjaisia ja pelaaja valitsee jokaiselle pelaajahahmolle komennon yksitellen. Hirviöitä on useita, ja pelaaja voi valita mitä hirviötä kukin hahmo lyö. Pelaaja voi käyttää kertakäyttöisiä esineitä taistelussa.
 
 **Käyttäjät:** Pelaaja
 
@@ -52,3 +61,4 @@ Taistelut tapahtuvat omassa erillisessä ruudussaan. Pelaajalla voi olla useita 
 	* pelaaja voi siirtyä kartalla noppaluvun verran.
 * Tee ostoksia kaupungissa
 * Hyökkää hirviön kimppuun
+* Paranna liittolaista parannusesineellä
