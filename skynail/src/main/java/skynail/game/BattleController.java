@@ -5,6 +5,7 @@
  */
 package skynail.game;
 
+import java.util.ArrayList;
 import java.util.List;
 import skynail.domain.Companion;
 import skynail.domain.Player;
@@ -140,11 +141,22 @@ public class BattleController {
      * Handles enemy attacks on player, currently very primitive.
      */
     public void enemyTurn() {
-
+        List<Companion> targets = new ArrayList<Companion>();
+        
+        for (Companion companion : player.getCompanions()) {
+            if (companion.getHP() > 0) {
+                targets.add(companion);
+            }
+        }
+        
+        if (targets.isEmpty()) {
+            return;
+        }
+        
         for (Monster monster : monsters) {
-            int attacked = diceRoller.diceThrow(player.getCompanions().size()) - 1;
+            int attacked = diceRoller.diceThrow(targets.size()) - 1;
 
-            player.getCompanions().get(attacked).reduceHP(monster.getAttack());
+            targets.get(attacked).reduceHP(monster.getAttack());
         }
     }
 

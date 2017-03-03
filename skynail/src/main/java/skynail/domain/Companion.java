@@ -17,7 +17,7 @@ public class Companion extends GameCharacter {
      * @param attack The amount of damage a character does.
      * @param name Name of the companion character.
      */
-    public Companion(int hp, int attack, String name) {
+    public Companion(String name, int hp, int attack) {
         super(hp, attack);
         this.name = name;
     }

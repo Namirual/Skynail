@@ -16,7 +16,7 @@ import skynail.gui.MapPoint;
  */
 public class Dungeon extends Road implements Point {
 
-    int treasure;
+    Trophy trophy;
     List<Monster> monsters;
     boolean cleared;
 
@@ -80,5 +80,15 @@ public class Dungeon extends Road implements Point {
 
     public void setCleared(boolean cleared) {
         this.cleared = cleared;
+    }
+
+    public void setTrophy(Trophy trophy) {
+        this.trophy = trophy;
+    }
+
+    public Trophy getTrophy() {
+        if (trophy == null)
+            return new Trophy(0, null, null);
+        return trophy;
     }
 }

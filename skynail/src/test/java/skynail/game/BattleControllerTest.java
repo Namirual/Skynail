@@ -44,7 +44,7 @@ public class BattleControllerTest {
     @Before
     public void setUp() {
         player = new Player("Pelaaja", new Road("testi"));
-        player.addCompanions(new Companion(30, 6, "Hero"), new Companion(20, 4, "Sidekick"));
+        player.addCompanions(new Companion("Hero", 30, 6), new Companion("Sidekick", 20, 4));
         uiManager = new TestUIManager();
 
         monsters = new ArrayList<Monster>();
@@ -111,7 +111,7 @@ public class BattleControllerTest {
     @Test
     public void deathStateWhenPlayerIsDead() {
         player = new Player("Pelaaja", new Road("testi"));
-        player.addCompanions(new Companion(-1, 6, "Hero"));
+        player.addCompanions(new Companion("Hero", -1, 6));
 
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
         assertEquals(battleController.updateGameState(), BattleState.death);
@@ -120,13 +120,26 @@ public class BattleControllerTest {
     @Test
     public void enemyAttacksDuringEnemyTurn() {
         player = new Player("Pelaaja", new Road("testi"));
-        player.addCompanions(new Companion(5, 6, "Hero"));
+        player.addCompanions(new Companion("Hero", 5, 6));
 
         battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
         battleController.enemyTurn();
         assertEquals(player.getCompanions().get(0).getHP(), 1);
     }
 
+    @Test
+    public void enemyDoesNotAttackCharactersWith0HP() {
+        player = new Player("Pelaaja", new Road("testi"));
+        player.addCompanions(new Companion("Hero", 15, 6));
+        player.addCompanions(new Companion("Hero", 5, 6));
+        player.getCompanions().get(1).reduceHP(5);
+
+        battleController = new BattleController(uiManager, new StaticRoller(), player, monsters);
+        battleController.enemyTurn();
+        assertEquals(player.getCompanions().get(0).getHP(), 11);
+        assertEquals(player.getCompanions().get(1).getHP(), 0);
+    }
+    
     @Test
     public void canUseItems() {
         Item potion = new Item("Potion", -15);

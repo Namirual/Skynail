@@ -54,6 +54,10 @@ public class GUIManager extends JPanel implements UIManager {
         //mapPainter.update();
     }
 
+    public void showMapMessage(String text) {
+        mapPainter.showMessageWindow(text);
+    }
+
     public void startCityScene(CityController cityController) {
         scene = new CityScene(this, cityController);
         this.add(scene);

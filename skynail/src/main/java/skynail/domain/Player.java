@@ -129,6 +129,16 @@ public class Player {
         }
     }
     
+    public void addTrophyContents(Trophy trophy) {
+        gold += trophy.getGold();
+        if (trophy.getItem() != null) {
+            addItem(trophy.getItem(), 1);
+        }
+        if (trophy.getNewCompanion() != null) {
+            addCompanions(trophy.getNewCompanion());
+        }
+    }
+    
     public Map<Item, Integer> getItems() {
         return items;
     }

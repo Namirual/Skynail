@@ -40,6 +40,8 @@ public class MapPainter extends JPanel {
 
     public MapPainter(GUIManager manager) {
         this.manager = manager;
+        
+        setPreferredSize(new Dimension(sizex, sizey));
         setSize(sizex, sizey);
 
         buttonPanel = new JPanel();
@@ -106,8 +108,11 @@ public class MapPainter extends JPanel {
 
     public void updateGUI(Point currentPoint) {
         if (currentPoint.getClass().equals(Dungeon.class)) {
-            explore.setText("Enter dungeon");
-            explore.setVisible(true);
+            Dungeon dungeon = (Dungeon) currentPoint;
+            if (!dungeon.isCleared()) {
+                explore.setText("Enter dungeon");
+                explore.setVisible(true);
+            }
         } else if (currentPoint.getClass().equals(City.class)) {
             explore.setText("Enter city");
             explore.setVisible(true);
@@ -158,6 +163,42 @@ public class MapPainter extends JPanel {
             g4.fillRect((characterPosition.getX() - 10), characterPosition.getY() - 10, 20, 20);
         }
 
+    }
+
+    public void showMessageWindow(String text) {
+
+        JDialog message = new JDialog();
+
+        message.setPreferredSize(new Dimension(320, 240));
+        message.setSize(320, 240);
+        message.setLocationRelativeTo(this);
+        message.setModal(true);
+        message.setUndecorated(true);
+
+        JButton closeButton = new JButton("OK!");
+        //JTextArea messageText = new JTextArea();
+
+        JPanel textPanel = new JPanel(new GridLayout(0, 1));
+        String[] textLines = text.split("\n");
+        for (String line : textLines) {
+            JLabel label = new JLabel(line);
+            textPanel.add(label);
+        }
+
+        closeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                message.setVisible(false);
+                message.dispose();
+            }
+        });
+
+        JPanel windowPanel = new JPanel();
+        windowPanel.add(textPanel);
+        windowPanel.add(closeButton);
+        message.getContentPane().add(windowPanel);
+
+        message.setVisible(true);
     }
 
     public void update() {

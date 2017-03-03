@@ -16,12 +16,15 @@ import skynail.service.PathService;
 import static org.junit.Assert.*;
 import skynail.domain.City;
 import skynail.domain.Dungeon;
+import skynail.domain.Monster;
 import skynail.domain.Point;
 
 import skynail.domain.Road;
 import skynail.domain.Player;
+import skynail.domain.Trophy;
 import skynail.gui.MapListener;
 import skynail.gui.MapPainter;
+import skynail.gui.MapPoint;
 import skynail.gui.UIManager;
 import skynail.service.DiceRoller;
 
@@ -137,8 +140,11 @@ public class MapControllerTest {
     @Test
     public void victoryInBattleResultIncreasesGold() {
         player.setGold(100);
+        Dungeon d = new Dungeon("Test 3", "Grotto", new Monster(35, 6), new MapPoint(70, 160));
+        d.setTrophy(new Trophy(100, null, null));
+        player.setLocation(d);
         mapController.processBattleResult(BattleState.victory);
-        assertTrue(player.getGold() > 100);
+        assertEquals(player.getGold(), 200);
     }
 
     @Test

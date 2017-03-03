@@ -23,6 +23,8 @@ public interface UIManager {
 
     public void displayMapMovement(List<Point> pathPoints);
 
+    public void showMapMessage(String text);
+    
     public void startCityScene(CityController cityController);
 
     public void endCityScene();
@@ -30,7 +32,7 @@ public interface UIManager {
     public void startBattleScene(BattleController battleController);
 
     public void endBattleScene();
-    
+        
     public MapController getMapController();
 
     public void setMapController(MapController mapController);

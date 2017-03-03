@@ -34,6 +34,7 @@ import skynail.domain.Item;
 import skynail.domain.Point;
 import skynail.domain.Player;
 import skynail.domain.Monster;
+import skynail.domain.Trophy;
 
 import skynail.game.*;
 import skynail.gui.GUIManager;
@@ -72,9 +73,14 @@ public class InitGUI {
         c.addMonster(new Monster(15, 3));
         c.addMonster(new Monster(20, 4));
 
+        Item potion = new Item("Potion", -15);
+        Companion heroine = new Companion("Valeria", 50, 10);
+        
         h.addItem(new Item("Potion", -15), 50);
         h.addItem(new Item("Super Potion", -30), 150);
 
+        i.setTrophy(new Trophy(100, heroine, potion));
+        
         a.addPointsBothWays(b);
         b.addPointsBothWays(c, d);
         c.addPointsBothWays(d);
@@ -87,7 +93,7 @@ public class InitGUI {
         worldPoints.addAll(Arrays.asList(a, b, c, d, e, f, g, h, i));
 
         Player player = new Player("Pelaaja", a);
-        player.addCompanions(new Companion(30, 6, "Hero"), new Companion(20, 4, "Sidekick"));
+        player.addCompanions(new Companion("Hero", 30, 6), new Companion("Sidekick", 20, 4));
         player.addItem(new Item("Potion", -15), 3);
 
         GUIManager manager = new GUIManager();

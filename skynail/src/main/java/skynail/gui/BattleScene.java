@@ -132,7 +132,7 @@ public class BattleScene extends JPanel {
 
     public void update() {
         graphicPanel.removeAll();
-        
+
         monsterPanel.removeAll();
 
         monsterPanel.setLayout(new GridLayout(controller.getMonsters().size(), 1));
@@ -240,7 +240,7 @@ public class BattleScene extends JPanel {
             int itemNumber = controller.getPlayer().getItems().get(item);
 
             JButton itemButton = new JButton(item.getName() + " : " + itemNumber);
-            
+
             itemPanel.add(itemButton);
             itemButton.addActionListener(new ActionListener() {
                 @Override
@@ -272,8 +272,8 @@ public class BattleScene extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 victoryMessage.setVisible(false);
-                manager.getMapController().processBattleResult(BattleState.victory);
                 manager.endBattleScene();
+                manager.getMapController().processBattleResult(BattleState.victory);
                 victoryMessage.dispose();
             }
         });

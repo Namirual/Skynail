@@ -97,8 +97,10 @@ public class MapController {
 
         if (point.getClass().equals(Dungeon.class)) {
             Dungeon dungeon = (Dungeon) point;
-            BattleController battleController = new BattleController(uiManager, diceRoller, player, dungeon.getMonsters());
-            uiManager.startBattleScene(battleController);
+            if (!dungeon.isCleared()) {
+                BattleController battleController = new BattleController(uiManager, diceRoller, player, dungeon.getMonsters());
+                uiManager.startBattleScene(battleController);
+            }
         }
     }
 
@@ -109,7 +111,12 @@ public class MapController {
      */
     public void processBattleResult(BattleState battleState) {
         if (battleState == BattleState.victory) {
-            player.setGold(player.getGold() + 150);
+            if (player.getLocation().getClass().equals(Dungeon.class)) {
+                Dungeon dungeon = (Dungeon) player.getLocation();
+                player.addTrophyContents(dungeon.getTrophy());
+                uiManager.showMapMessage(dungeon.getTrophy().toString());
+                dungeon.setCleared(true);
+            }
         }
     }
 

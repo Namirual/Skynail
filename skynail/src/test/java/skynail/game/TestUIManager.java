@@ -19,7 +19,7 @@ public class TestUIManager implements UIManager {
 
     List<Point> worldMap;
     List<Point> legalMoves;
-    
+
     boolean battle;
 
     @Override
@@ -33,6 +33,10 @@ public class TestUIManager implements UIManager {
     @Override
     public void endCityScene() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void showMapMessage(String text) {
     }
 
     @Override
