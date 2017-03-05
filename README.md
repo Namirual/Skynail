@@ -13,3 +13,5 @@ Pelillä on graafinen käyttöliittymä, joka muistuttaa esitystavaltaan lautape
 [Pit-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/dokumentaatio/pit-raportti/201703052033/index.html)
 
 [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)
+
+[HTML-Javadoc](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/javadoc/index.html)
