@@ -265,7 +265,7 @@ public class BattleScene extends JPanel {
         victoryMessage.setUndecorated(true);
 
         JPanel victoryTexts = new JPanel();
-        JButton endButton = new JButton("Leave victorious!");
+        JButton endButton = new JButton("Leave!");
         JLabel endText = new JLabel();
 
         endButton.addActionListener(new ActionListener() {

@@ -5,10 +5,6 @@
  */
 package skynail;
 
-/**
- *
- * @author lmantyla
- */
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -42,14 +38,14 @@ import skynail.service.DiceRoller;
 import skynail.service.RandomRoller;
 
 /**
- * Initialisation for the graphical user interface.
+ * Initialisation and content for the graphical user interface.
  *
  * @author lmantyla
  */
 public class InitGUI {
 
     /**
-     * Initialises and creates map for the old TextControl class.
+     * Initialises and creates map for the game.
      *
      * @param args Command line arguments.
      */
@@ -109,7 +105,6 @@ public class InitGUI {
         r.setTrophy(new Trophy(0, guide, null));
         z.setTrophy(new Trophy(100, null, potion));
         z.getTrophy().setSkynail(true);
-
         
         a.addPointsBothWays(b);
         b.addPointsBothWays(c, d);

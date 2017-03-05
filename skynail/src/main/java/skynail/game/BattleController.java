@@ -124,7 +124,7 @@ public class BattleController {
             characterTurn = 0;
         }
 
-        if (player.getCompanions().get(0).getHP() < 0) {
+        if (player.getCompanions().get(0).getHP() <= 0) {
             return BattleState.death;
         }
 
