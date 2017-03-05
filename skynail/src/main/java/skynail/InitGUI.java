@@ -144,7 +144,7 @@ public class InitGUI {
                 n, o, p, q, r, s, t, u, v, x, y, z));
 
         Player player = new Player("Player", a);
-        player.addCompanions(new Companion("Hero", 30, 6), new Companion("Sidekick", 20, 4));
+        player.addCompanions(new Companion("Hero", 30, 6));
         player.addItem(new Item("Potion", -15), 3);
 
         GUIManager manager = new GUIManager();
@@ -163,5 +163,8 @@ public class InitGUI {
 
         frame.getContentPane().add(manager);
         frame.setVisible(true);
+        manager.showMapMessage("Go forth and find the Skynail"
+                + "\nand bring it to your starting point!");
+
     }
 }

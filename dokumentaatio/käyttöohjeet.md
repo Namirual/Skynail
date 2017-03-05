@@ -21,7 +21,7 @@ Saapuessaan luolastoihin pelaaja joutuu taisteluun hirviöitä vastaan. Pelaajan
 
 Pelaaja voi käyttää esineitä omien hahmojensa parantamiseen. Tällöin täytyy ensin valita esine painamalla "Use Item"-nappulaa ruudun alaosassa. Tämän jälkeen pelaaja voi valita hahmon, johon esinettä käytetään painamalla yhtä hahmoja kuvaavista nappuloista ruudun keskiosassa. Jokainen käyttökerta kuluttaa yhden esineen.
 
-Peli päättyy jos pelaajahahmoista ensimmäisen ("Hero") HP laskee nollaan. Jos pelaaja voittaa, pelaaja saa lisää kultaa.
+Peli päättyy jos pelaajahahmoista ensimmäisen ("Hero") HP laskee alle nollan. Jos pelaaja voittaa, hän saa luolastossa sijainneen aarteen, johon voi sisältyä kultaa, esine tai uusi liittolainen.
 
 ###Kaupunkinäkymä
 

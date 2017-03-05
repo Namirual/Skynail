@@ -25,25 +25,21 @@ import skynail.game.MapController;
  */
 public class MapListener implements MouseListener {
 
-    private JTextField tieto;
+    private JLabel tieto;
     GUIManager manager;
 
-    public MapListener(JTextField tieto, GUIManager manager) {
+    public MapListener(JLabel tieto, GUIManager manager) {
         this.tieto = tieto;
         this.manager = manager;
     }
     
-    /*public void setController(MapController control) {
-        this.control = control;
-    }*/
-
     @Override
     public void mouseClicked(MouseEvent e) {
-        tieto.setText(e.getX() + " " + e.getY());
+        //tieto.setText(e.getX() + " " + e.getY());
 
         for (Point point : manager.getMapController().getWorldMap()) {
             if (point.getMapPoint().checkIfInside(e.getX(), e.getY())) {
-                tieto.setText("Point Clicked! " + e.getX() + " " + e.getY());
+                //tieto.setText("Point Clicked! " + e.getX() + " " + e.getY());
                 manager.getMapController().handlePointInput(point);
                 manager.getMapPainter().update();
                 return;
@@ -54,7 +50,7 @@ public class MapListener implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        tieto.setText(e.getX() + " " + e.getY());
+        //tieto.setText(e.getX() + " " + e.getY());
     }
 
     @Override

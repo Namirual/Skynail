@@ -35,6 +35,7 @@ public class MapPainter extends JPanel {
     JPanel buttonPanel;
     JButton rollDice;
     JButton explore;
+    JLabel turnLabel;
 
     final int sizex = 480;
     final int sizey = 480;
@@ -48,7 +49,10 @@ public class MapPainter extends JPanel {
         buttonPanel = new JPanel();
         this.add(buttonPanel);
 
-        JTextField field = new JTextField("Pixel coordinates of clicks.");
+        JLabel field = new JLabel("Roll the dice!");
+        turnLabel = new JLabel("Turn 1  ");
+
+        buttonPanel.add(turnLabel);
         buttonPanel.add(field);
 
         listener = new MapListener(field, manager);
@@ -61,7 +65,7 @@ public class MapPainter extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int roll = manager.getMapController().handleDiceRoll();
-                field.setText("Your dice roll is " + roll);
+                field.setText("Your dice roll is " + roll + ".");
                 update();
             }
         });
@@ -127,6 +131,8 @@ public class MapPainter extends JPanel {
         } else {
             explore.setVisible(false);
         }
+        turnLabel.setText("Turn " + manager.getMapController().getMapLogic().getTurnNumber() + "  ");
+        
     }
 
     public void paint(Graphics g) {
@@ -228,7 +234,7 @@ public class MapPainter extends JPanel {
 
         message.setVisible(true);
     }
-    
+
     public void showMessageWindow(String text) {
         showMessageWindow(text, false);
     }
