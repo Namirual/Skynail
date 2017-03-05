@@ -14,6 +14,9 @@ Päivä | Tunnit | Kuvaus
 13.02.2017 | 4.0h | Taistelunäkymän luonti aloitettu
 16.02.2017 | 5.0h | Animoitu liikkuminen kartalla, lisää testejä
 17.02.2017 | 8.0h | Refaktorointia, sekvenssikaaviot, lisää testejä
-22.03.2017 | 3.0h | Taistelunäkymän jatkokehittämistä
-23.03.2017 | 4.0h | Lisää taistelunäkymää
-24.03.2017 | 6.0h | Kauppa, esinelista taistelussa, testit ja raportointi
+22.02.2017 | 3.0h | Taistelunäkymän jatkokehittämistä
+23.02.2017 | 4.0h | Lisää taistelunäkymää
+24.02.2017 | 6.0h | Kauppa, esinelista taistelussa, testit ja raportointi
+03.03.2017 | 3.0h | Erilaiset palkinnot taistelussa
+04.03.2017 | 6.0h | AI-vastustaja, pelin voitto- ja häviötilat
+05.03.2017 | 7.0h | Refaktorointeja ja testejä, raportin viimeistely

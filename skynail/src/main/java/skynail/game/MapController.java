@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package skynail.game;
 
 import java.util.ArrayList;
@@ -10,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import skynail.domain.City;
+import skynail.domain.Companion;
 import skynail.domain.Dungeon;
+import skynail.domain.Monster;
 
 import skynail.domain.Point;
 import skynail.domain.Player;
@@ -25,19 +22,16 @@ import skynail.service.DiceRoller;
  */
 public class MapController {
 
-    private Player player;
-    private DiceRoller diceRoller;
-
     private UIManager uiManager;
+    private DiceRoller diceRoller;
+    
+    private PathService pathService;
+    private MapLogic mapLogic;
 
-    PathService pathService;
-
-    List<Point> worldMap;
-    List<Point> pathPoints;
-
+    private List<Point> pathPoints;
     private Map<Point, Integer> legalMoves;
-    private int moves;
-    boolean moving;
+
+    int moves;
 
     /**
      * Initializes the Map Controller.
@@ -48,16 +42,14 @@ public class MapController {
      * @param diceRoller currently used dice roller
      */
     public MapController(Player player, List<Point> worldMap, DiceRoller diceRoller, UIManager uiManager) {
-        this.player = player;
-        this.diceRoller = diceRoller;
         this.uiManager = uiManager;
-        this.worldMap = worldMap;
-
+        this.diceRoller = diceRoller;
+        
         this.pathService = new PathService(player);
+        this.mapLogic = new MapLogic(diceRoller, uiManager, worldMap, player);
         this.legalMoves = pathService.calculateLegalMoves(1);
 
         this.pathPoints = new ArrayList<Point>();
-        this.moving = false;
     }
 
     /**
@@ -72,15 +64,17 @@ public class MapController {
 
         if (legalMoves.containsKey(point)) {
 
-            moving = true;
             pathPoints = pathService.getMovementPath(point);
-            uiManager.displayMapMovement(pathPoints);
-
-            player.setLocation(point);
-            moving = false;
+            getPlayer().setLocation(point);
+            uiManager.displayMapMovement(getPlayer(), pathPoints);
 
             moves = 0;
             legalMoves.clear();
+
+            if (mapLogic.checkPlayerFight()) {
+                return;
+            }
+            mapLogic.processTurn();
         }
     }
 
@@ -88,34 +82,18 @@ public class MapController {
      * Processes different area types the player may enter.
      */
     public void handleEnteringArea() {
-        Point point = player.getLocation();
+        Point point = getPlayer().getLocation();
         if (point.getClass().equals(City.class)) {
             City city = (City) point;
-            uiManager.startCityScene(new CityController(uiManager, player, city));
+            uiManager.startCityScene(new CityController(uiManager, getPlayer(), city));
 
         }
 
         if (point.getClass().equals(Dungeon.class)) {
             Dungeon dungeon = (Dungeon) point;
             if (!dungeon.isCleared()) {
-                BattleController battleController = new BattleController(uiManager, diceRoller, player, dungeon.getMonsters());
+                BattleController battleController = new BattleController(uiManager, diceRoller, getPlayer(), dungeon.getMonsters());
                 uiManager.startBattleScene(battleController);
-            }
-        }
-    }
-
-    /**
-     * Processes rewards or other changes at the end of the battle, unfinished.
-     *
-     * @param battleState state at the end of the battle.
-     */
-    public void processBattleResult(BattleState battleState) {
-        if (battleState == BattleState.victory) {
-            if (player.getLocation().getClass().equals(Dungeon.class)) {
-                Dungeon dungeon = (Dungeon) player.getLocation();
-                player.addTrophyContents(dungeon.getTrophy());
-                uiManager.showMapMessage(dungeon.getTrophy().toString());
-                dungeon.setCleared(true);
             }
         }
     }
@@ -126,22 +104,37 @@ public class MapController {
      * @return random number from dice roller
      */
     public int handleDiceRoll() {
+        if (moves != 0) {
+            mapLogic.processTurn();
+        }
         moves = diceRoller.diceThrow(3);
         legalMoves = pathService.calculateLegalMoves(moves);
 
         return moves;
     }
 
-    public Player getPlayer() {
-        return player;
+    public MapLogic getMapLogic() {
+        return mapLogic;
     }
 
+    /**
+     * Redirects get command to mapLogic.
+     * @return Player used by human player
+     */
+    public Player getPlayer() {
+        return mapLogic.getPlayer();
+    }
+
+    /**
+     * Redirects set command to mapLogic.
+     * @param player Player used by human player.
+     */
     public void setPlayer(Player player) {
-        this.player = player;
+        mapLogic.setPlayer(player);
     }
 
     public List<Point> getWorldMap() {
-        return worldMap;
+        return mapLogic.getWorldMap();
     }
 
     public Map<Point, Integer> getLegalMoves() {
@@ -152,11 +145,19 @@ public class MapController {
         return pathPoints;
     }
 
-    public boolean isMoving() {
-        return moving;
+    public void setMoves(int moves) {
+        this.moves = moves;
     }
 
+    public int getMoves() {
+        return moves;
+    }
+
+    /**
+     * Redirects set command for world map to MapLogic.
+     * @param worldMap List containing all points in the game.
+     */
     public void setWorldMap(List<Point> worldMap) {
-        this.worldMap = worldMap;
+        mapLogic.setWorldMap(worldMap);
     }
 }

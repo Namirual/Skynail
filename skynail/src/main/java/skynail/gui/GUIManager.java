@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import skynail.domain.City;
 import skynail.domain.Dungeon;
+import skynail.domain.Player;
 import skynail.domain.Point;
 import skynail.game.BattleController;
 import skynail.game.CityController;
@@ -47,15 +48,17 @@ public class GUIManager extends JPanel implements UIManager {
         this.add(mapPainter);
     }
 
-    public void displayMapMovement(List<Point> pathPoints) {
-        if (mapController.isMoving()) {
-            mapPainter.movePath(pathPoints);
-        }
+    public void displayMapMovement(Player player, List<Point> pathPoints) {
+        mapPainter.movePath(player, pathPoints);
         //mapPainter.update();
     }
 
     public void showMapMessage(String text) {
         mapPainter.showMessageWindow(text);
+    }
+
+    public void showEndScreen(String text) {
+        mapPainter.showMessageWindow(text, true);
     }
 
     public void startCityScene(CityController cityController) {

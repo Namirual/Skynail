@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package skynail.service;
 
 import java.util.ArrayList;
@@ -14,8 +9,8 @@ import skynail.domain.Player;
 import skynail.domain.Point;
 
 /**
- * Service for finding available legal moves and generating paths. 
- * 
+ * Service for finding available legal moves and generating paths.
+ *
  * @author lmantyla
  */
 public class PathService {
@@ -25,7 +20,9 @@ public class PathService {
 
     /**
      * Creates new PathService.
-     * @param player The player from whose perspective the path is being searched.
+     *
+     * @param player The player from whose perspective the path is being
+     * searched.
      */
     public PathService(Player player) {
         this.player = player;
@@ -42,6 +39,7 @@ public class PathService {
 
     /**
      * Makes a list of legal moves a team can make on the map.
+     *
      * @param moves Number of moves available this turn.
      * @return Map of legal moves and the amount of moves needed to reach them.
      */
@@ -76,27 +74,27 @@ public class PathService {
      * <p>
      * If a reachable point has a higher distance than is currently examined,
      * examining it is delayed until the loop's distance catches up. Therefore
-     * the original point is returned to be added to the buffer of points to
-     * be examined.
-     * 
+     * the original point is returned to be added to the buffer of points to be
+     * examined.
+     *
      * @param reachablePoint point that has been reached
-     * @param distance distance from the player's position that the calculation has reached.
-     * @return list of points linked to the point, only when distance is correct. 
+     * @param distance distance from the player's position that the calculation
+     * has reached.
+     * @return list of points linked to the point, only when distance is
+     * correct.
      */
     public List<Point> handleReachedPoint(Point reachablePoint, int distance) {
-
-        if (legalMoves.get(reachablePoint) > distance) {
+        if (legalMoves.get(reachablePoint) > distance + 1) {
             return Arrays.asList(reachablePoint);
-        } else if (legalMoves.get(reachablePoint) < distance) {
+        } else if (legalMoves.get(reachablePoint) < distance + 1) {
             return new ArrayList<Point>();
         }
-
         return reachablePoint.getLinkedPoints();
     }
 
     /**
      * Checks if a point reached by the search is a legal move.
-     * 
+     *
      * @param reachablePoint point being examined
      * @param moves number of moves this turn
      * @param distance distance of the point from current position
@@ -110,10 +108,11 @@ public class PathService {
             return new ArrayList<>();
         }
 
-        /*if (movesRequired > 1 && movesRequired <= moves - distance) {
+        if (movesRequired > 1 && movesRequired <= moves - distance) {
             legalMoves.put(reachablePoint, distance + movesRequired);
-            return new ArrayList<Point>();
-        }*/
+            return Arrays.asList(reachablePoint);
+        }
+
         if (movesRequired > 0 && movesRequired <= moves - distance) {
             legalMoves.put(reachablePoint, distance + movesRequired);
             return reachablePoint.getLinkedPoints();
@@ -123,11 +122,11 @@ public class PathService {
     }
 
     /**
-     * Produces a path between the player and a selected legal move; the method works 
-     * backwards towards the current position of the team.
-     * 
+     * Produces a path between the player and a selected legal move; the method
+     * works backwards towards the current position of the team.
+     *
      * @param reachablePoint Point the player wants to reach.
-     * 
+     *
      * @return list of points leading to the current point.
      */
     public List<Point> getMovementPath(Point reachablePoint) {
@@ -156,5 +155,32 @@ public class PathService {
         }
 
         return pathPoints;
+    }
+    /**
+     * Produces a path between player and target that goes as far as moves allow. 
+     *
+     * @param targetPoint Point the player wants to reach.
+     * @param moves number of moves the player may take.
+     * 
+     * @return list of points leading to the current point.
+     */
+
+    public List<Point> getPartialMovementPath(Point targetPoint, int moves) {
+        List<Point> pathPoints = getMovementPath(targetPoint);
+        if (pathPoints.size() < 2) {
+            return pathPoints;
+        }
+        int movesTaken = 1;
+        while (movesTaken < pathPoints.size()) {
+            Point examinedMove = pathPoints.get(pathPoints.size() - (movesTaken + 1));
+            if (moves >= legalMoves.get(examinedMove)) {
+                
+                //moves -= legalMoves.get(examinedMove);
+                movesTaken++;
+            } else {
+                break;
+            }
+        }
+        return pathPoints.subList(pathPoints.size() - movesTaken, pathPoints.size());
     }
 }

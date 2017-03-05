@@ -140,7 +140,7 @@
 <a class="jxr_linenumber" name="L132" href="#L132">132</a> 
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> update() {
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         graphicPanel.removeAll();
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>         
+<a class="jxr_linenumber" name="L135" href="#L135">135</a> 
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>         monsterPanel.removeAll();
 <a class="jxr_linenumber" name="L137" href="#L137">137</a> 
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>         monsterPanel.setLayout(<strong class="jxr_keyword">new</strong> GridLayout(controller.getMonsters().size(), 1));
@@ -248,7 +248,7 @@
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>             <strong class="jxr_keyword">int</strong> itemNumber = controller.getPlayer().getItems().get(item);
 <a class="jxr_linenumber" name="L241" href="#L241">241</a> 
 <a class="jxr_linenumber" name="L242" href="#L242">242</a>             JButton itemButton = <strong class="jxr_keyword">new</strong> JButton(item.getName() + <span class="jxr_string">" : "</span> + itemNumber);
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>             
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> 
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>             itemPanel.add(itemButton);
 <a class="jxr_linenumber" name="L245" href="#L245">245</a>             itemButton.addActionListener(<strong class="jxr_keyword">new</strong> ActionListener() {
 <a class="jxr_linenumber" name="L246" href="#L246">246</a>                 @Override
@@ -280,8 +280,8 @@
 <a class="jxr_linenumber" name="L272" href="#L272">272</a>             @Override
 <a class="jxr_linenumber" name="L273" href="#L273">273</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
 <a class="jxr_linenumber" name="L274" href="#L274">274</a>                 victoryMessage.setVisible(false);
-<a class="jxr_linenumber" name="L275" href="#L275">275</a>                 manager.getMapController().processBattleResult(BattleState.victory);
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>                 manager.endBattleScene();
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>                 manager.endBattleScene();
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>                 manager.getMapController().getMapLogic().processBattleResult(BattleState.victory);
 <a class="jxr_linenumber" name="L277" href="#L277">277</a>                 victoryMessage.dispose();
 <a class="jxr_linenumber" name="L278" href="#L278">278</a>             }
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>         });

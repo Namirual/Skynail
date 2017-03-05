@@ -15,7 +15,9 @@ import org.junit.Test;
 import skynail.service.PathService;
 import static org.junit.Assert.*;
 import skynail.domain.City;
+import skynail.domain.Companion;
 import skynail.domain.Dungeon;
+import skynail.domain.Item;
 import skynail.domain.Monster;
 import skynail.domain.Point;
 
@@ -38,6 +40,7 @@ public class MapControllerTest {
     Road b;
     Road c;
     Road d;
+    Dungeon e;
 
     Player player;
 
@@ -62,10 +65,12 @@ public class MapControllerTest {
         b = new Road("Test 2");
         c = new Road("Test 3");
         d = new Road("Test 4");
+        e = new Dungeon("Test Dungeon");
 
         a.addPointsBothWays(b);
         b.addPointsBothWays(c);
         c.addPointsBothWays(d);
+        d.addPointsBothWays(e);
 
         player = new Player("Pelaaja", a);
 
@@ -73,6 +78,10 @@ public class MapControllerTest {
 
         DiceRoller diceRoller = new StaticRoller();
         mapController = new MapController(player, Arrays.asList(a, b, c, d), diceRoller, uiManager);
+
+        AIMover aiMover = new AIMover(new Player("Test AI", a), mapController.getMapLogic(), diceRoller);
+        mapController.getMapLogic().setAiMover(aiMover);
+
     }
 
     @After
@@ -84,7 +93,6 @@ public class MapControllerTest {
         assertEquals(mapController.getPlayer(), player);
         assertEquals(mapController.getWorldMap().size(), 4);
         assertEquals(mapController.getPathPoints().size(), 0);
-        assertEquals(mapController.isMoving(), false);
     }
 
     @Test
@@ -112,7 +120,7 @@ public class MapControllerTest {
     @Test
     public void afterLegalMovementZeroLegalMoves() {
         mapController.handlePointInput(b);
-        TestUIManager manager = (TestUIManager) uiManager;
+        //TestUIManager manager = (TestUIManager) uiManager;
         assertEquals(mapController.getLegalMoves().size(), 0);
     }
 
@@ -132,9 +140,46 @@ public class MapControllerTest {
 
     @Test
     public void diceRollMoreThanZero() {
-        int luku = 0;
-        luku = mapController.handleDiceRoll();
-        assertNotEquals(luku, 0);
+        int number = 0;
+        number = mapController.handleDiceRoll();
+        assertNotEquals(number, 0);
+    }
+
+    @Test
+    public void rollingDiceWhenAlreadyRolledMovesTurn() {
+        int number = mapController.getMapLogic().getTurnNumber();
+        mapController.handleDiceRoll();
+        assertEquals(number, mapController.getMapLogic().getTurnNumber());
+        mapController.handleDiceRoll();
+        assertEquals(number + 1, mapController.getMapLogic().getTurnNumber());
+    }
+
+    @Test
+    public void aiMovesWithNextTurn() {
+        mapController.getMapLogic().processTurn();
+        assertNotSame(mapController.getMapLogic().getAiMover().getAiPlayer().getLocation(), a);
+    }
+
+    @Test
+    public void playerVictoryWorks() {
+        mapController.getMapLogic().setGoal(a);
+        mapController.getMapLogic().setPlayerWithSkynail(player);
+        mapController.getPlayer().setLocation(a);
+
+        mapController.getMapLogic().processTurn();
+        TestUIManager manager = (TestUIManager) uiManager;
+        assertTrue(manager.victory);
+    }
+
+    @Test
+    public void aiVictoryWorks() {
+        mapController.getMapLogic().setGoal(a);
+        mapController.getMapLogic().setPlayerWithSkynail(mapController.getMapLogic().getAiMover().getAiPlayer());
+        mapController.getMapLogic().getAiMover().getAiPlayer().setLocation(a);
+        mapController.getMapLogic().getAiMover().setAiState(AIState.goToGoal);
+        mapController.getMapLogic().processTurn();
+        TestUIManager manager = (TestUIManager) uiManager;
+        assertTrue(manager.victory);
     }
 
     @Test
@@ -143,8 +188,39 @@ public class MapControllerTest {
         Dungeon d = new Dungeon("Test 3", "Grotto", new Monster(35, 6), new MapPoint(70, 160));
         d.setTrophy(new Trophy(100, null, null));
         player.setLocation(d);
-        mapController.processBattleResult(BattleState.victory);
+        mapController.getMapLogic().processBattleResult(BattleState.victory);
         assertEquals(player.getGold(), 200);
+    }
+
+    @Test
+    public void victoryInBattleGivesAllTrophies() {
+        player.setGold(100);
+        Dungeon d = new Dungeon("Test 3", "Grotto", new Monster(35, 6), new MapPoint(70, 160));
+        Item item = new Item("Test Item", -20);
+        Companion companion = new Companion("Test Companion", 20, 10);
+        d.setTrophy(new Trophy(100, companion, item));
+        d.getTrophy().setSkynail(true);
+        player.setLocation(d);
+        mapController.getMapLogic().processBattleResult(BattleState.victory);
+        assertEquals(player.getGold(), 200);
+        assertTrue(player.getCompanions().contains(companion));
+        assertTrue(player.getItems().containsKey(item));
+        assertTrue(mapController.getMapLogic().getPlayerWithSkynail() == player);
+    }
+
+    @Test
+    public void victoryAgainstOtherPlayerGivesSkynail() {
+        mapController.getMapLogic().setPlayerFight(true);
+        mapController.getMapLogic().processBattleResult(BattleState.victory);
+        assertEquals(mapController.getMapLogic().getPlayerWithSkynail(), player);
+    }
+
+    @Test
+    public void victoryAgainstOtherPlayerKillsAI() {
+        mapController.getMapLogic().setPlayerFight(true);
+        mapController.getMapLogic().processBattleResult(BattleState.victory);
+        assertEquals(mapController.getMapLogic().getAiMover().getAiState(), AIState.dead);
+        assertEquals(mapController.getMapLogic().isPlayerFight(), false);
     }
 
     @Test

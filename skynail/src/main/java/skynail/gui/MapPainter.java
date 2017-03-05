@@ -19,6 +19,7 @@ import skynail.domain.City;
 import skynail.domain.Road;
 import skynail.domain.Point;
 import skynail.domain.Player;
+import skynail.game.AIState;
 import skynail.game.MapController;
 
 /**
@@ -40,7 +41,7 @@ public class MapPainter extends JPanel {
 
     public MapPainter(GUIManager manager) {
         this.manager = manager;
-        
+
         setPreferredSize(new Dimension(sizex, sizey));
         setSize(sizex, sizey);
 
@@ -78,13 +79,20 @@ public class MapPainter extends JPanel {
 
     }
 
-    public void movePath(List<Point> characterPath) {
+    public void movePath(Player player, List<Point> characterPath) {
+        if (characterPath.size() <= 1) {
+            return;
+        }
+
         buttonPanel.setVisible(false);
+
+        player.setMapPoint(new MapPoint(characterPath.get(characterPath.size() - 1).getMapPoint()));
+
         for (int luku = characterPath.size() - 1; luku > 0; luku--) {
             moveInALine(characterPath.get(luku), characterPath.get(luku - 1),
-                    manager.getMapController().getPlayer().getMapPoint());
+                    player.getMapPoint());
         }
-        updateGUI(characterPath.get(0));
+        updateGUI(manager.getMapController().getPlayer().getLocation());
 
         buttonPanel.setVisible(true);
     }
@@ -147,6 +155,12 @@ public class MapPainter extends JPanel {
             } else {
                 g2.fillOval((point.getMapPoint().getX() - 15), point.getMapPoint().getY() - 15, 30, 30);
                 g2.setColor(Color.WHITE);
+                if (point.getClass().equals(Dungeon.class)) {
+                    Dungeon dungeon = (Dungeon) point;
+                    if (dungeon.isCleared()) {
+                        g2.setColor(Color.BLACK);
+                    }
+                }
                 g2.fillOval((point.getMapPoint().getX() - 10), point.getMapPoint().getY() - 10, 20, 20);
             }
         }
@@ -163,9 +177,20 @@ public class MapPainter extends JPanel {
             g4.fillRect((characterPosition.getX() - 10), characterPosition.getY() - 10, 20, 20);
         }
 
+        MapPoint enemyPosition = manager.getMapController().getMapLogic().getAiMover().getAiPlayer().getMapPoint();
+        if (manager.getMapController().getMapLogic().getAiMover().getAiState() != AIState.dead) {
+            if (enemyPosition == null) {
+                Point point = manager.getMapController().getMapLogic().getAiMover().getAiPlayer().getLocation();
+                g4.setColor(Color.black);
+                g4.fillRect((point.getMapPoint().getX() - 10), point.getMapPoint().getY() - 10, 20, 20);
+            } else {
+                g4.setColor(Color.black);
+                g4.fillRect((enemyPosition.getX() - 10), enemyPosition.getY() - 10, 20, 20);
+            }
+        }
     }
 
-    public void showMessageWindow(String text) {
+    public void showMessageWindow(String text, boolean endWindow) {
 
         JDialog message = new JDialog();
 
@@ -189,6 +214,9 @@ public class MapPainter extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 message.setVisible(false);
+                if (endWindow) {
+                    System.exit(0);
+                }
                 message.dispose();
             }
         });
@@ -199,6 +227,10 @@ public class MapPainter extends JPanel {
         message.getContentPane().add(windowPanel);
 
         message.setVisible(true);
+    }
+    
+    public void showMessageWindow(String text) {
+        showMessageWindow(text, false);
     }
 
     public void update() {

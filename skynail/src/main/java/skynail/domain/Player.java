@@ -97,9 +97,27 @@ public class Player {
             companions.add(companion);
         }
     }
+    
+    /**
+     * Adds to the player the objects contained in a trophy.
+     * @param trophy Trophy to be added.
+     */
+    public void addTrophyContents(Trophy trophy) {
+        gold += trophy.getGold();
+        if (trophy.getItem() != null) {
+            addItem(trophy.getItem(), 1);
+        }
+        if (trophy.getNewCompanion() != null) {
+            addCompanions(trophy.getNewCompanion());
+        }
+    }
 
     public MapPoint getMapPoint() {
         return mapPoint;
+    }
+
+    public void setMapPoint(MapPoint mapPoint) {
+        this.mapPoint = mapPoint;
     }
 
     /**
@@ -126,16 +144,6 @@ public class Player {
         items.replace(item, items.get(item) - 1);
         if (items.get(item) <= 0) {
             items.remove(item);
-        }
-    }
-    
-    public void addTrophyContents(Trophy trophy) {
-        gold += trophy.getGold();
-        if (trophy.getItem() != null) {
-            addItem(trophy.getItem(), 1);
-        }
-        if (trophy.getNewCompanion() != null) {
-            addCompanions(trophy.getNewCompanion());
         }
     }
     

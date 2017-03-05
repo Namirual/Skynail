@@ -273,7 +273,7 @@ public class BattleScene extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 victoryMessage.setVisible(false);
                 manager.endBattleScene();
-                manager.getMapController().processBattleResult(BattleState.victory);
+                manager.getMapController().getMapLogic().processBattleResult(BattleState.victory);
                 victoryMessage.dispose();
             }
         });

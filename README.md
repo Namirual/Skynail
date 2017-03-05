@@ -10,6 +10,6 @@ Pelillä on graafinen käyttöliittymä, joka muistuttaa esitystavaltaan lautape
 
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
-[Pit-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/dokumentaatio/pit-raportti/201702242352/index.html)
+[Pit-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/dokumentaatio/pit-raportti/201703052033/index.html)
 
 [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/Namirual/Skynail/blob/master/dokumentaatio/checkstyle-raportti/checkstyle.html)

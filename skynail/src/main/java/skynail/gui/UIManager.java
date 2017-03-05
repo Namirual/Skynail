@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.util.List;
 import javax.swing.JPanel;
 import skynail.domain.City;
+import skynail.domain.Player;
 import skynail.domain.Point;
 import skynail.game.BattleController;
 import skynail.game.CityController;
@@ -21,9 +22,11 @@ public interface UIManager {
     
     public void setMapPainter(MapPainter mapPainter);
 
-    public void displayMapMovement(List<Point> pathPoints);
+    public void displayMapMovement(Player player, List<Point> pathPoints);
 
     public void showMapMessage(String text);
+    
+    public void showEndScreen(String text);
     
     public void startCityScene(CityController cityController);
 

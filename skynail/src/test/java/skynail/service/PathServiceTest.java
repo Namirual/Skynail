@@ -111,7 +111,7 @@ public class PathServiceTest {
     public void handleReachedPointDelaysAnalysisOfMovesUntilDistanceMatches() {
         a.addPoints(b, c);
 
-        pathService.getLegalMoves().put(b, 2);
+        pathService.getLegalMoves().put(b, 3);
         List<Point> newReachablePoints = new ArrayList<Point>();
         newReachablePoints.addAll(pathService.handleReachedPoint(b, 1));
         assertEquals(newReachablePoints.size(), 1);
@@ -127,7 +127,9 @@ public class PathServiceTest {
 
         pathService.getLegalMoves().put(c, 2);
         List<Point> newReachablePoints = new ArrayList<Point>();
-        newReachablePoints.addAll(pathService.handleReachedPoint(c, 2));
+        newReachablePoints.addAll(pathService.handleReachedPoint(c, 1));
+
+        System.out.println("points" + newReachablePoints);
         assertEquals(newReachablePoints.size(), 2);
         assertTrue(newReachablePoints.contains(d));
         assertTrue(newReachablePoints.contains(e));
@@ -211,4 +213,42 @@ public class PathServiceTest {
 
         assertEquals(pathService.getMovementPath(d).size(), 0);
     }
+
+    @Test
+    public void partialListSearchWorks() {
+        a.addPointsBothWays(b);
+        b.addPointsBothWays(c);
+        c.addPointsBothWays(d);
+        d.addPointsBothWays(e);
+
+        legalMoves = pathService.calculateLegalMoves(4);
+        List<Point> path = pathService.getPartialMovementPath(e, 2);
+        
+        assertEquals(path.size(), 3);
+    }
+    
+    @Test
+    public void partialListSearchReturnsOneWithZeroMove() {
+        a.addPointsBothWays(b);
+        b.addPointsBothWays(c);
+        c.addPointsBothWays(d);
+        d.addPointsBothWays(e);
+
+        legalMoves = pathService.calculateLegalMoves(4);
+        List<Point> path = pathService.getPartialMovementPath(e, 0);
+        
+        assertEquals(path.size(), 1);
+    }
+    
+    @Test
+    public void partialListSearchDoesNotBreakWithSmallMap() {
+        a.addPointsBothWays(b);
+
+        legalMoves = pathService.calculateLegalMoves(4);
+        List<Point> path = pathService.getPartialMovementPath(b, 0);
+        
+        assertEquals(path.size(), 1);
+    }
+
+
 }

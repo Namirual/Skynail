@@ -3,15 +3,17 @@
 
 Toteutetaan vuoropohjainen roolipeli, jonka rakenne on sekoitus perinteistä lautapeliä ja tietokoneroolipeliä. Pelissä liikutaan lautapelimäisellä kartalla kohteiden välillä, joissa pelaaja taistelee hirviöiden kanssa ja kerää aarteita, esineitä ja liittolaisia. Pelin tavoite on löytää Naulatähti, taivaankannesta maahan pudonnut taikaesine.
 
-Pelissä on toteutuksen alkuvaiheessa yksi pelaaja. Kehityksen edetessä tarkoitus on toteuttaa peliin tietokoneen ohjaamia vastustajia, jotka liikkuvat kartalla ja kilpailevat pelaajan kanssa resursseista.
+Pelissä on pelaajan lisäksi kilpaileva tietokoneen ohjaama vastustaja, joka pelaajan tavoin pystyy keräämään aarteita luolastoista ja pyrkii löytämään Naulatähden.
 
-**Suunnitteluvaiheen luokkakaavio**
+**Luokkakaavio**
 
-Luokkakaaviot kuvaavat ohjelman rakennetta viikolla 6. Viikolla 6 peliin tuli uusina ominaisuuksina useampi hirviö taistelussa sekä esineiden käyttö taisteluissa ja niiden ostaminen kaupungeissa. Tämän seurauksena myös pelilogiikan luokkarakenne muuttui entistä monimutkaisemmaksi, joten jaoin luokkakaavion kolmeen osaan, joista kukin kuvastaa yhtä pelin osa-aluetta: karttaa, taistelukohtauksia ja kaupunkikohtauksia.
+Luokkakaaviot kuvaavat ohjelman rakennetta lopullisen palautuksen aikaan viikolla 7, jossa uusina ominaisuuksina ovat erilliseen luokkaan asetetut palkinnot, voittoehtojen hallinta ja tietokoneen ohjaama kilpaileva pelaaja. Kartan pelilogiikka on nyt jaettu MapLogic- ja MapController-luokkien välille. Pelilogiikan monimutkaisuuden vuoksi olen jakanut luokkakaavion kolmeen osaan, joista kukin kuvastaa yhtä pelin osa-aluetta: karttaa, taistelukohtauksia ja kaupunkikohtauksia.
 
-![Viikon 6 luokkakaavio](Luokkakaaviovko6Map.png)
+![Viikon 7 luokkakaavio](Luokkakaaviovko7Map.png)
 
-Karttanäkymä on pelin päänäkymä, josta muut ikkunat avataan. Kartta koostuu erilaisista toisiinsa linkitetyistä pisteistä, jotka toteuttavat Point-rajapinnan. MapController käyttää PathService -palveluluokkaa, joka laskee mahdolliset siirrot pelaajalle. Näkymällä on graafinen käyttöliittymä, joka on yhteydessä karttanäkymän pelilogiikkaa toteuttavaan MapControlleriin UIManager-rajapinnan kautta.
+Karttanäkymä on pelin päänäkymä, josta muut ikkunat avataan. Kartta koostuu erilaisista toisiinsa linkitetyistä pisteistä, jotka toteuttavat Point-rajapinnan. Koko pelin tilaa käsittelevä logiikka on sijoitettu MapLogic -luokkaan, johon ihmispelaajan toimintoja toteuttava MapController ja tietokonevastustajaa hallitseva AIMover ovat yhteydessä.
+
+MapController ja AIMover käyttävät molemmat PathService -palveluluokkaa, joka laskee mahdolliset siirrot pelaajille. Näkymällä on graafinen käyttöliittymä, joka on yhteydessä MapControlleriin UIManager-rajapinnan kautta.
 
 ![Viikon 6 luokkakaavio](Luokkakaaviovko6City.png)
 
@@ -43,14 +45,16 @@ Kartta toteutettiin alkuvaiheessa tekstipohjaisena ja tämän jälkeen graafises
 Solmuista osa on erityisiä kohteita, joihin pelaaja voi jäädä. Tästä seuraa erityinen tapahtuma sen mukaan, mitä ominaisuuksia kohteella on. Kohdetyyppejä ovat esimerkiksi:
 
 * Luolasto
-	* Luolastossa on yksi tai useampi hirviö, joiden kanssa voi taistella. Jos pelaaja voittaa, pelaaja saa luolastossa sijaitsevan aarteen.
+	* Luolastossa on yksi tai useampi hirviö, joiden kanssa voi taistella. Jos pelaaja voittaa, pelaaja saa luolastossa sijaitsevan aarteen, joita on kulta, esineet, uudet liittolaiset sekä pelin voittamiseen tarvittu Naulatähti.
 * Kaupunki
-	* Kaupungeissa voi ostaa tavaroita.
+	* Kaupungeissa voi ostaa tavaroita kullalla.
 
 
 ###Taistelu
 
 Taistelut tapahtuvat omassa erillisessä ruudussaan. Pelaajalla voi olla useita hahmoja, jotka osallistuvat taisteluun. Taistelut ovat vuoropohjaisia ja pelaaja valitsee jokaiselle pelaajahahmolle komennon yksitellen. Hirviöitä on useita, ja pelaaja voi valita mitä hirviötä kukin hahmo lyö. Pelaaja voi käyttää kertakäyttöisiä esineitä taistelussa.
+
+Kun Naulatähti on löytynyt, pelaajat voivat taistella keskenään päädyttyään samaan ruutuun.
 
 **Käyttäjät:** Pelaaja
 

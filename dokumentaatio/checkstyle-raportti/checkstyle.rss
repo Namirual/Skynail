@@ -25,7 +25,7 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 26,
+      <title>File: 30,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -89,6 +89,34 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#skynail.domain.Point.java">skynail/domain/Point.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#skynail.game.AIMover.java">skynail/game/AIMover.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#skynail.domain.Trophy.java">skynail/domain/Trophy.java</a>
                 </td>
                 <td>
                   0
@@ -326,6 +354,20 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#skynail.game.MapLogic.java">skynail/game/MapLogic.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#skynail.gui.BattleScene.java">skynail/gui/BattleScene.java</a>
                 </td>
                 <td>
@@ -355,6 +397,20 @@ under the License.
                           <tr>
                 <td>
                   <a href="${project.url}/checkstyle.html#skynail.game.MapController.java">skynail/game/MapController.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#skynail.game.AIState.java">skynail/game/AIState.java</a>
                 </td>
                 <td>
                   0

@@ -1,5 +1,13 @@
 #Skynail
-Skynail on vuoropohjainen roolipeli, jossa liikutaan lautapelimäisesti noppaa heittämällä. Pelissä ei ole toistaiseksi kartalla liikkuvia kilpailijoita eikä myöskään toteutettua voittotilaa, mutta muu keskeinen pelimekaniikka toimii jo.
+Skynail on vuoropohjainen roolipeli, jossa liikutaan lautapelimäisesti noppaa heittämällä. Pelissä pelaaja kilpailee tietokonevastustajan kanssa siitä, kumpi löytää ensin mystisen taikaesineen, Naulatähden, joka sijaitsee jossakin pelilaudalla.
+
+###Pelin tavoite
+
+Pelin voittaa löytämällä naulatähden yhdestä pelin luolastoista. Tämän jälkeen pelaajan tätyy viedä esine maaliin, joka sijaitsee ruudun vasemmassa ylälaidassa siinä pisteessä, josta peli alkoi.
+
+Pelaaja ja tietokonevastustaja voivat olla samassa ruudussa yhtä aikaa. Pelin alkuvaiheessa pelaajat eivät voi taistella keskenään, mutta kun Naulatähti on löytänyt, mikäli pelaajat päätyvät samaan ruutuun yhtä aikaa, seuraa taistelukohtaus, jonka voittaja saa Naulatähden.
+
+Pelin voi hävitä joko kuolemalla tai siten, että tietokonevastustaja on saanut Naulatähden ja vienyt sen maaliin.
 
 ###Karttanäkymä
 

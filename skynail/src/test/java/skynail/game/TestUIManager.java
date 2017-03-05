@@ -7,6 +7,7 @@ package skynail.game;
 
 import java.util.List;
 import skynail.domain.City;
+import skynail.domain.Player;
 import skynail.domain.Point;
 import skynail.gui.MapPainter;
 import skynail.gui.UIManager;
@@ -21,9 +22,10 @@ public class TestUIManager implements UIManager {
     List<Point> legalMoves;
 
     boolean battle;
+    boolean victory;
 
     @Override
-    public void displayMapMovement(List<Point> points) {
+    public void displayMapMovement(Player player, List<Point> points) {
     }
 
     @Override
@@ -37,6 +39,10 @@ public class TestUIManager implements UIManager {
 
     @Override
     public void showMapMessage(String text) {
+    }
+
+    public void showEndScreen(String text) {
+        victory = true;
     }
 
     @Override

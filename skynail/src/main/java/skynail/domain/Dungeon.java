@@ -25,10 +25,11 @@ public class Dungeon extends Road implements Point {
     /**
      * Creates new Dungeon for the text user interface.
      *
-     * @param name name of the Road.
-´    */
+     * @param name name of the Road. ´
+     */
     public Dungeon(String name) {
         super(name);
+        this.monsters = new ArrayList<Monster>();
     }
 
     /**
@@ -64,6 +65,7 @@ public class Dungeon extends Road implements Point {
 
     /**
      * Adds monster to the list of monsters.
+     *
      * @param monster monster to be added.
      */
     public void addMonster(Monster monster) {
@@ -86,9 +88,14 @@ public class Dungeon extends Road implements Point {
         this.trophy = trophy;
     }
 
+    /**
+     * Returns trophy.
+     * @return Returns trophy or default empty trophy is none has been defined.
+     */
     public Trophy getTrophy() {
-        if (trophy == null)
+        if (trophy == null) {
             return new Trophy(0, null, null);
+        }
         return trophy;
     }
 }
